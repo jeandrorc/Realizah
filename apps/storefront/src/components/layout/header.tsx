@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CartIcon } from '@/components/store/cart-icon';
 
 export function Header() {
   return (
@@ -21,6 +22,7 @@ export function Header() {
           </Link>
         </nav>
         <div className="flex items-center gap-2">
+          <CartIcon />
           <Button variant="ghost" size="icon" asChild>
             <Link href="/login" aria-label="Entrar na conta">
               <User className="h-5 w-5" />
