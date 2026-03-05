@@ -7,6 +7,93 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-03-04
+
+### Added
+
+#### Subscription Module
+
+- **Tipos de Subscription** (`@realizah/types`)
+  - `SubscriptionPlan`, `Subscription`, `SubscriptionInvoice`
+  - Tipos de input: `CreateSubscriptionPlanInput`, `UpdateSubscriptionPlanInput`, `CreateSubscriptionInput`, `CancelSubscriptionInput`
+  - Enums: `SubscriptionStatus`, `InvoiceStatus`, `SubscriptionInterval`, `Tier`
+
+- **Modelos de Dados** (`apps/medusa/src/modules/subscription/models/`)
+  - `SubscriptionPlan`: planos de assinatura com preço, intervalo, trial, features
+  - `Subscription`: assinaturas ativas com status, períodos, cancelamento
+  - `SubscriptionInvoice`: faturas de cobrança com status de pagamento
+
+- **Serviços** (`apps/medusa/src/modules/subscription/services/`)
+  - `SubscriptionPlanService`: CRUD de planos, filtragem por tier/status
+  - `SubscriptionService`: criar, cancelar, renovar, reativar assinaturas
+  - `SubscriptionInvoiceService`: gerenciar faturas e pagamentos
+
+- **Admin APIs** (`apps/medusa/src/api/admin/subscriptions/`)
+  - `GET/POST /admin/subscriptions/plans` - Gerenciar planos
+  - `GET/PATCH/DELETE /admin/subscriptions/plans/:id` - CRUD de plano específico
+  - `GET /admin/subscriptions` - Listar todas as assinaturas
+  - `GET /admin/subscriptions/:id` - Detalhes de assinatura
+  - `POST /admin/subscriptions/:id/cancel` - Cancelar assinatura
+  - `POST /admin/subscriptions/:id/reactivate` - Reativar assinatura
+  - `GET /admin/subscriptions/invoices` - Listar todas as invoices
+  - `GET /admin/subscriptions/invoices/:id` - Detalhes de invoice
+
+- **Store APIs** (`apps/medusa/src/api/store/subscriptions/`)
+  - `GET /store/subscriptions/plans` - Listar planos ativos
+  - `GET /store/subscriptions/plans/:id` - Detalhes de plano
+  - `POST /store/subscriptions` - Criar assinatura (autenticado)
+  - `GET /store/subscriptions` - Listar assinaturas do cliente
+  - `GET /store/subscriptions/:id` - Detalhes da assinatura
+  - `POST /store/subscriptions/:id/cancel` - Cancelar própria assinatura
+  - `POST /store/subscriptions/:id/reactivate` - Reativar própria assinatura
+  - `GET /store/subscriptions/:id/invoices` - Listar invoices da assinatura
+
+- **Workflows** (`apps/medusa/src/modules/subscription/workflows/`)
+  - `create-subscription-workflow`: criar assinatura + primeira invoice
+  - `cancel-subscription-workflow`: cancelar com opção imediata/agendada
+  - `renew-subscription-workflow`: renovar + criar nova invoice
+
+- **Subscribers** (`apps/medusa/src/modules/subscription/subscribers/`)
+  - `subscription.created`: log de criação de assinatura
+  - `subscription.canceled`: log de cancelamento
+  - `subscription.renewed`: log de renovação
+  - `subscription.payment_failed`: log de falha de pagamento + atualização de status
+
+- **Migrations** (`apps/medusa/src/modules/subscription/migrations/`)
+  - Tabelas: `subscription_plan`, `subscription`, `subscription_invoice`
+  - Índices: customer, status, period_end, subscription_id
+
+#### Funcionalidades
+
+- ✅ Suporte a trial periods configuráveis
+- ✅ Cancelamento imediato ou agendado (fim do período)
+- ✅ Reativação de assinaturas canceladas
+- ✅ Renovação automática (lógica implementada)
+- ✅ Múltiplos intervalos: monthly, yearly (+ suporte a trimestral/semestral via `intervalCount`)
+- ✅ Tiers: free, pro, premium
+- ✅ Metadata flexível em todas as entidades
+
+### Technical
+
+- **Arquitetura**: Módulo interno do Medusa v2 (preparado para migração futura)
+- **Type Safety**: Tipos compartilhados em `@realizah/types`
+- **Workflows**: Transações atômicas usando Medusa Workflows SDK
+- **Eventos**: Sistema de eventos para desacoplamento
+- **Performance**: 6 índices otimizados para queries comuns
+- **Autorização**: Separação Admin/Store com validação de `customerId`
+
+### Documentation
+
+- ADR 003: Decisões técnicas da Fase 2
+- Especificação completa em `docs/specs/subscription-module.md`
+
+### Known Limitations
+
+- ⚠️ Módulo não registrado em `medusa-config.js` (limitação do Medusa v2 RC)
+- ⚠️ Pagamentos não integrados (aguarda Fase 5: Mercado Pago)
+- ⚠️ Renovação manual (aguarda implementação de scheduler)
+- ⚠️ Emails não enviados (aguarda integração com serviço de email)
+
 ## [0.1.0] - 2026-03-04
 
 ### Added - Fase 1: Setup do Monorepo
