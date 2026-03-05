@@ -7,6 +7,92 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-03-04
+
+### Added
+
+#### Access Control Module
+
+- **Tipos de Access Control** (`@realizah/types`)
+  - `Feature`, `AccessRule`, `CustomerAccess`
+  - Tipos de input: `CreateFeatureInput`, `UpdateFeatureInput`, `CreateAccessRuleInput`, `UpdateAccessRuleInput`
+  - Tipos de validação: `ValidateAccessInput`, `GrantAccessInput`, `RevokeAccessInput`
+  - Tipo de resposta: `FeatureAccess` (feature + hasAccess + reason)
+  - Enums: `AccessAction` (allow/deny)
+
+- **Modelos de Dados** (`apps/medusa/src/modules/access-control/models/`)
+  - `Feature`: funcionalidades controláveis por tier
+  - `AccessRule`: regras customizadas com prioridade e expiração
+  - `CustomerAccess`: cache de acesso do cliente
+
+- **Serviços** (`apps/medusa/src/modules/access-control/services/`)
+  - `FeatureService`: CRUD de features, filtragem por categoria/tier
+  - `AccessRuleService`: CRUD de regras, cleanup de regras expiradas
+  - `AccessControlService`: lógica principal de verificação de acesso
+
+- **Admin APIs** (`apps/medusa/src/api/admin/access/`)
+  - `GET/POST /admin/access/features` - Gerenciar features
+  - `GET/PATCH/DELETE /admin/access/features/:id` - CRUD de feature
+  - `GET/POST /admin/access/rules` - Gerenciar regras
+  - `GET/PATCH/DELETE /admin/access/rules/:id` - CRUD de regra
+  - `GET /admin/access/customers/:customerId` - Ver acesso do cliente
+  - `POST /admin/access/customers/:customerId/grant` - Conceder acesso
+  - `POST /admin/access/customers/:customerId/revoke` - Revogar acesso
+
+- **Store APIs** (`apps/medusa/src/api/store/access/`)
+  - `GET /store/access/features` - Listar features ativas
+  - `GET /store/access/features/:id` - Detalhes de feature
+  - `POST /store/access/validate` - Validar acesso a feature
+  - `GET /store/access/my-features` - Listar minhas features disponíveis
+
+- **Subscribers** (`apps/medusa/src/modules/access-control/subscribers/`)
+  - `subscription.created`: atualizar tier do cliente
+  - `subscription.canceled`: downgrade para free
+  - `subscription.renewed`: manter tier
+  - `subscription.payment_failed`: manter tier temporariamente (grace period)
+
+- **Seed Script** (`apps/medusa/src/modules/access-control/scripts/`)
+  - 16 features padrão distribuídas por tier
+  - Free (3): cursos gratuitos, ferramentas básicas, suporte email
+  - Pro (5): todos cursos, ferramentas avançadas, analytics, certificados
+  - Premium (8): cursos exclusivos, ferramentas premium, consultoria, API access
+
+- **Migrations** (`apps/medusa/src/modules/access-control/migrations/`)
+  - Tabelas: `feature`, `access_rule`, `customer_access`
+  - 9 índices otimizados
+
+#### Funcionalidades
+
+- ✅ Hierarquia de tiers (free < pro < premium)
+- ✅ Verificação de acesso por tier
+- ✅ Regras customizadas com prioridade
+- ✅ Suporte a acesso temporário (expiração)
+- ✅ Grant/revoke access manual
+- ✅ Cache de acesso por cliente para performance
+- ✅ Integração automática com Subscription Module via eventos
+- ✅ Sincronização de tier ao criar/cancelar assinatura
+
+### Technical
+
+- **Arquitetura**: Event-driven com subscribers
+- **Performance**: Cache de acesso, 9 índices otimizados
+- **Flexibilidade**: Regras customizadas, features dinâmicas
+- **Type Safety**: Tipos compartilhados em `@realizah/types`
+- **Integração**: Desacoplada via eventos do Subscription Module
+
+### Documentation
+
+- ADR 004: Decisões técnicas da Fase 3
+- Especificação completa em `docs/specs/access-control-module.md`
+- Seed script como exemplo de features
+
+### Known Limitations
+
+- ⚠️ Sem middleware de verificação (verificação manual nas APIs)
+- ⚠️ Sem audit log de grant/revoke
+- ⚠️ Sem rate limiting por tier
+- ⚠️ Cache pode dessincronizar se eventos falharem
+
 ## [0.2.0] - 2026-03-04
 
 ### Added
