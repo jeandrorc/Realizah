@@ -14,6 +14,7 @@ module.exports = defineConfig({
     },
   },
   modules: [
-    // Módulos customizados serão adicionados aqui
+    // Módulos customizados serão registrados após build
+    // TODO: Adicionar subscription module após implementar package separado
   ],
 });
