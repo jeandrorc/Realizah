@@ -1,0 +1,9 @@
+export { default as CourseService } from './course';
+export { default as CourseModuleService } from './course-module';
+export { default as LessonService } from './lesson';
+export { default as EnrollmentService } from './enrollment';
+export { default as LessonProgressService } from './lesson-progress';
+export { default as CourseReviewService } from './course-review';
+export { default as ProgressManagerService } from './progress-manager';
+export { default as QuizManagerService } from './quiz-manager';
+export { default as CertificateManagerService } from './certificate-manager';
