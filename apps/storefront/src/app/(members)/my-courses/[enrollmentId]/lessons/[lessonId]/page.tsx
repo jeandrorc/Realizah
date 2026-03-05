@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LessonPlayer } from '@/components/courses/lesson-player';
+import { MEDUSA_URL } from '@/lib/config';
 
 interface LessonPageProps {
   params: Promise<{ enrollmentId: string; lessonId: string }>;
@@ -21,7 +22,6 @@ async function getLesson(
   lessonId: string,
 ): Promise<{ lesson: LessonData; isCompleted: boolean } | null> {
   try {
-    const MEDUSA_URL = process.env.NEXT_PUBLIC_MEDUSA_API_URL ?? 'http://localhost:9000';
     const res = await fetch(`${MEDUSA_URL}/store/my-enrollments/${enrollmentId}/progress`, {
       cache: 'no-store',
       credentials: 'include',

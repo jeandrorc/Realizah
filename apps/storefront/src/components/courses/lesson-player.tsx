@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CheckCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { MEDUSA_URL } from '@/lib/config';
 
 interface LessonPlayerProps {
   lesson: {
@@ -23,7 +24,6 @@ export function LessonPlayer({ lesson, enrollmentId, isCompleted, onComplete }: 
   const handleComplete = async () => {
     setIsMarking(true);
     try {
-      const MEDUSA_URL = process.env.NEXT_PUBLIC_MEDUSA_API_URL ?? 'http://localhost:9000';
       await fetch(
         `${MEDUSA_URL}/store/my-enrollments/${enrollmentId}/lessons/${lesson.id}/complete`,
         { method: 'POST', credentials: 'include' },

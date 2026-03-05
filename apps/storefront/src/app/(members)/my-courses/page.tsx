@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MEDUSA_URL } from '@/lib/config';
 
 export const metadata: Metadata = { title: 'Meus Cursos' };
 
@@ -21,7 +22,6 @@ interface Enrollment {
 
 async function getMyEnrollments(): Promise<Enrollment[]> {
   try {
-    const MEDUSA_URL = process.env.NEXT_PUBLIC_MEDUSA_API_URL ?? 'http://localhost:9000';
     const res = await fetch(`${MEDUSA_URL}/store/my-enrollments`, {
       cache: 'no-store',
       credentials: 'include',

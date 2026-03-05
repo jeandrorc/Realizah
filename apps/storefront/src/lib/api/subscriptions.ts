@@ -1,4 +1,4 @@
-const MEDUSA_URL = process.env.NEXT_PUBLIC_MEDUSA_API_URL ?? 'http://localhost:9000';
+import { MEDUSA_URL } from '@/lib/config';
 
 export async function listSubscriptionPlans() {
   try {

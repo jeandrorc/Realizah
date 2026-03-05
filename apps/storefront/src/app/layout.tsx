@@ -2,11 +2,10 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import { Providers } from '@/components/providers';
+import { BASE_URL } from '@/lib/config';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://realizah.com';
 
 export const metadata: Metadata = {
   title: {

@@ -4,6 +4,7 @@ import { Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { MEDUSA_URL } from '@/lib/config';
 
 export const metadata: Metadata = { title: 'Meus Downloads' };
 
@@ -31,7 +32,6 @@ const statusConfig: Record<
 
 async function getMyDownloads(): Promise<DigitalPurchase[]> {
   try {
-    const MEDUSA_URL = process.env.NEXT_PUBLIC_MEDUSA_API_URL ?? 'http://localhost:9000';
     const res = await fetch(`${MEDUSA_URL}/store/my-digital-products`, {
       cache: 'no-store',
       credentials: 'include',

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { MEDUSA_URL } from '@/lib/config';
 
 interface EnrollmentPageProps {
   params: Promise<{ enrollmentId: string }>;
@@ -38,7 +39,6 @@ interface EnrollmentDetail {
 
 async function getEnrollment(enrollmentId: string): Promise<EnrollmentDetail | null> {
   try {
-    const MEDUSA_URL = process.env.NEXT_PUBLIC_MEDUSA_API_URL ?? 'http://localhost:9000';
     const res = await fetch(`${MEDUSA_URL}/store/my-enrollments/${enrollmentId}`, {
       cache: 'no-store',
       credentials: 'include',

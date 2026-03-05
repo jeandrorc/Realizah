@@ -1,8 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { listProducts } from '@/lib/api/products';
 import { listCourses } from '@/lib/api/courses';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://realizah.com';
+import { BASE_URL } from '@/lib/config';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [{ products }, { courses }] = await Promise.all([

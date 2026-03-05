@@ -1,4 +1,4 @@
-const MEDUSA_URL = process.env.NEXT_PUBLIC_MEDUSA_API_URL ?? 'http://localhost:9000';
+import { MEDUSA_URL } from '@/lib/config';
 
 export async function listCourses(params?: { limit?: number; offset?: number }) {
   const limit = params?.limit ?? 12;

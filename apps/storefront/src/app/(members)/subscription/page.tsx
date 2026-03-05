@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { MEDUSA_URL } from '@/lib/config';
 
 export const metadata: Metadata = { title: 'Assinatura' };
 
@@ -66,7 +67,6 @@ const defaultPlans: Plan[] = [
 
 async function getActivePlans(): Promise<Plan[]> {
   try {
-    const MEDUSA_URL = process.env.NEXT_PUBLIC_MEDUSA_API_URL ?? 'http://localhost:9000';
     const res = await fetch(`${MEDUSA_URL}/store/subscription-plans`, {
       next: { revalidate: 300 },
     });
