@@ -7,6 +7,97 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-03-05
+
+### Added
+
+#### Digital Delivery Module (Secure File Distribution)
+
+- **Tipos de Digital Delivery** (`@realizah/types`)
+  - `DigitalProduct`, `DigitalFile`, `DigitalPurchase`, `DownloadLog`
+  - Tipos de input: `CreateDigitalProductInput`, `UpdateDigitalProductInput`, `UploadFileInput`, `CreatePurchaseInput`, `GenerateDownloadUrlInput`
+  - Tipos de resposta: `DownloadUrlResponse`, `DownloadStats`, `FileInfo`
+  - Enums: `ProductType` (ebook/template/software/audio/document), `PurchaseStatus` (pending/active/expired/revoked)
+
+- **Modelos de Dados** (`apps/medusa/src/modules/digital-delivery/models/`)
+  - `DigitalProduct`: produtos digitais com tipo, limites e tier
+  - `DigitalFile`: arquivos com checksum SHA-256 e storage key
+  - `DigitalPurchase`: compras com status, expiração e download count
+  - `DownloadLog`: auditoria completa com IP, user-agent e timestamp
+
+- **Services** (`apps/medusa/src/modules/digital-delivery/services/`)
+  - `DigitalProductService`: CRUD de produtos, cálculo de fileSize
+  - `DigitalFileService`: upload S3, checksum, validação (tamanho, MIME type)
+  - `DigitalPurchaseService`: gestão de compras, ativação, revogação, renovação
+  - `DownloadLogService`: logging, estatísticas, detecção de atividade suspeita
+  - `DownloadManagerService`: geração de URLs assinadas (1h), verificação de acesso
+  - `PurchaseManagerService`: integração com Medusa (order events), batch operations
+
+- **Admin APIs** (`apps/medusa/src/api/admin/`)
+  - `POST/GET/PATCH/DELETE /admin/digital-products` - gestão de produtos
+  - `POST/GET/DELETE /admin/digital-products/:id/files` - gestão de arquivos
+  - `GET /admin/digital-purchases` - listagem de compras
+  - `GET /admin/digital-purchases/:id` - detalhes de compra
+  - `POST /admin/digital-purchases/:id/revoke` - revogar acesso
+  - `POST /admin/digital-purchases/:id/renew` - renovar acesso
+  - `GET /admin/download-logs` - logs de download
+  - `GET /admin/download-logs/stats` - estatísticas
+
+- **Store APIs** (`apps/medusa/src/api/store/`)
+  - `GET /store/my-digital-products` - produtos do customer
+  - `GET /store/my-digital-products/:id` - detalhes de compra
+  - `POST /store/my-digital-products/:id/files/:fileId/download` - gerar URL de download
+  - `GET /store/my-digital-products/:id/downloads` - histórico de downloads
+
+- **Subscribers** (`apps/medusa/src/modules/digital-delivery/subscribers/`)
+  - `order.placed` → criar purchases (status: pending)
+  - `order.payment_captured` → ativar purchases (status: active)
+  - `order.canceled` → revogar purchases (status: revoked)
+  - `order.refunded` → revogar purchases (status: revoked)
+  - `digital_purchase.created` → enviar email de download
+  - `digital_purchase.downloaded` → verificar atividade suspeita
+  - `digital_purchase.expired` → notificar customer
+  - `digital_purchase.revoked` → notificar customer
+  - `digital_purchase.limit_reached` → notificar customer
+
+- **Utils** (`apps/medusa/src/modules/digital-delivery/utils/`)
+  - `checksum.ts`: cálculo e verificação de SHA-256
+  - `s3.ts`: upload, presigned URLs, delete (mock)
+  - `validation.ts`: validação de tamanho e MIME type
+
+- **Integração com Access Control**
+  - Middleware `verifyDigitalProductAccess` para verificação de tier
+  - Helper `canAccessDigitalProduct` para verificação programática
+
+- **Migrations**
+  - 4 tabelas: `digital_product`, `digital_file`, `digital_purchase`, `download_log`
+  - 14 indexes otimizados para queries frequentes
+  - Foreign keys com ON DELETE CASCADE
+  - Unique constraint para prevenir compras duplicadas
+
+- **Seed**
+  - 5 produtos digitais padrão (ebook, template, software, audio, document)
+
+- **Documentação**
+  - `INTEGRATION_TESTS.md`: 8 cenários de teste manual
+  - `ADR 0006`: decisões técnicas e arquiteturais
+
+### Technical Details
+
+- **Segurança**: Checksums SHA-256, URLs assinadas (1h), validação de arquivos
+- **Controle de Acesso**: Tier-based, limites de download, expiração configurável
+- **Auditoria**: Logs completos, detecção de fraude (múltiplos IPs, downloads rápidos)
+- **Escalabilidade**: S3 storage, indexes otimizados, event-driven architecture
+- **Flexibilidade**: Múltiplos arquivos por produto, renovação, revogação
+
+### Known Limitations
+
+- S3 mock (requer AWS SDK para produção)
+- Email notifications são TODOs
+- Admin file upload usa base64 (requer multipart para produção)
+- Sem DRM para vídeo/áudio
+- Sem watermarking para PDFs
+
 ## [0.4.0] - 2026-03-04
 
 ### Added
