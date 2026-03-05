@@ -1,0 +1,28 @@
+module.exports = {
+  semi: true,
+  trailingComma: 'all',
+  singleQuote: true,
+  printWidth: 100,
+  tabWidth: 2,
+  useTabs: false,
+  arrowParens: 'always',
+  endOfLine: 'lf',
+  bracketSpacing: true,
+  bracketSameLine: false,
+  
+  // Plugin overrides
+  overrides: [
+    {
+      files: '*.json',
+      options: {
+        printWidth: 80,
+      },
+    },
+    {
+      files: '*.md',
+      options: {
+        proseWrap: 'always',
+      },
+    },
+  ],
+};

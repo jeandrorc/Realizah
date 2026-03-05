@@ -1,0 +1,160 @@
+---
+description: Convenções para módulos customizados do Medusa
+globs: "apps/medusa/**/*"
+alwaysApply: false
+---
+
+# Medusa Modules Conventions
+
+## Estrutura de Módulo
+
+Cada módulo customizado deve seguir esta estrutura:
+
+```
+apps/medusa/src/modules/<module-name>/
+├── index.ts                 # Export do módulo
+├── service.ts               # Lógica de negócio
+├── models/                  # Entidades/modelos
+│   └── <entity>.ts
+├── migrations/              # Migrations do banco
+│   └── YYYYMMDDHHMMSS_<description>.ts
+├── types/                   # Tipos específicos do módulo
+│   └── index.ts
+└── __tests__/               # Testes
+    └── service.spec.ts
+```
+
+## Registrar Módulo
+
+```typescript
+// ✅ BOM - apps/medusa/src/modules/subscription/index.ts
+import { Module } from '@medusajs/utils';
+import { SubscriptionService } from './service';
+
+export const SUBSCRIPTION_MODULE = 'subscriptionModuleService';
+
+export default Module(SUBSCRIPTION_MODULE, {
+  service: SubscriptionService,
+});
+```
+
+## Service Pattern
+
+```typescript
+// ✅ BOM - service com injeção de dependências
+import { MedusaContainer } from '@medusajs/types';
+
+export class SubscriptionService {
+  constructor(private readonly container: MedusaContainer) {}
+
+  async createPlan(data: CreatePlanInput): Promise<SubscriptionPlan> {
+    // validação
+    // lógica de negócio
+    // persistência
+    return plan;
+  }
+
+  async cancelSubscription(id: string): Promise<void> {
+    // lógica de cancelamento
+  }
+}
+```
+
+## Models
+
+```typescript
+// ✅ BOM - model com decorators do Medusa
+import { model } from '@medusajs/utils';
+
+@model()
+export class SubscriptionPlan {
+  id: string;
+  name: string;
+  price: number;
+  interval: 'monthly' | 'yearly';
+  features: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+## Migrations
+
+```typescript
+// ✅ BOM - migration com up/down
+import { Migration } from '@medusajs/utils';
+
+export default class CreateSubscriptionPlan1234567890 implements Migration {
+  async up(): Promise<void> {
+    await this.query(`
+      CREATE TABLE subscription_plan (
+        id VARCHAR PRIMARY KEY,
+        name VARCHAR NOT NULL,
+        price INTEGER NOT NULL,
+        interval VARCHAR NOT NULL,
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+      )
+    `);
+  }
+
+  async down(): Promise<void> {
+    await this.query('DROP TABLE subscription_plan');
+  }
+}
+```
+
+## API Routes
+
+```typescript
+// ✅ BOM - admin route
+// apps/medusa/src/api/admin/subscriptions/route.ts
+import { MedusaRequest, MedusaResponse } from '@medusajs/medusa';
+
+export async function POST(req: MedusaRequest, res: MedusaResponse) {
+  const subscriptionService = req.scope.resolve('subscriptionModuleService');
+  const plan = await subscriptionService.createPlan(req.body);
+  res.json({ plan });
+}
+
+// ✅ BOM - store route
+// apps/medusa/src/api/store/subscriptions/route.ts
+export async function GET(req: MedusaRequest, res: MedusaResponse) {
+  const subscriptionService = req.scope.resolve('subscriptionModuleService');
+  const subscriptions = await subscriptionService.listByCustomer(req.user.id);
+  res.json({ subscriptions });
+}
+```
+
+## Testes
+
+```typescript
+// ✅ BOM - testes de service
+describe('SubscriptionService', () => {
+  let service: SubscriptionService;
+  let container: MedusaContainer;
+
+  beforeEach(() => {
+    container = createMockContainer();
+    service = new SubscriptionService(container);
+  });
+
+  describe('createPlan', () => {
+    it('should create plan with valid data', async () => {
+      const data = { name: 'Pro', price: 9900, interval: 'monthly' };
+      const plan = await service.createPlan(data);
+      expect(plan.name).toBe('Pro');
+    });
+  });
+});
+```
+
+## Gotchas
+
+- Migrations devem ter timestamp no nome
+- Services devem ser registrados no container
+- Use `MedusaRequest` e `MedusaResponse` para routes
+- Models precisam do decorator `@model()`
+- Sempre implemente `up` e `down` em migrations
+
+Referência: [Medusa v2 Modules](https://docs.medusajs.com/v2/modules)

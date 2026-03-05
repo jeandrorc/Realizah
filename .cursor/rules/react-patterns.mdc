@@ -1,0 +1,100 @@
+---
+description: Padrões React/Next.js para o projeto Realizah
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# React/Next.js Patterns
+
+## Componentes
+
+```typescript
+// ✅ BOM - functional components com tipos
+interface UserProfileProps {
+  userId: string;
+  showEmail?: boolean;
+}
+
+export function UserProfile({ userId, showEmail = false }: UserProfileProps) {
+  // implementação
+}
+```
+
+## Hooks
+
+```typescript
+// ✅ BOM - hooks no topo
+export function UserProfile({ userId }: UserProfileProps) {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // efeito
+  }, [userId]);
+
+  // render
+}
+
+// ✅ BOM - hooks customizados com prefixo 'use'
+export function useUser(userId: string) {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // lógica
+
+  return { user, loading };
+}
+```
+
+## Next.js 15 App Router
+
+```typescript
+// ✅ BOM - Server Component por padrão
+export default async function UserPage({ params }: { params: { id: string } }) {
+  const user = await fetchUser(params.id);
+  return <UserProfile user={user} />;
+}
+
+// ✅ BOM - Client Component explícito
+'use client';
+
+export function InteractiveButton() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+```
+
+## Imports
+
+```typescript
+// ✅ BOM - imports organizados
+// 1. Externos
+import { useState, useEffect } from 'react';
+import { z } from 'zod';
+
+// 2. Internos (aliases)
+import { Button } from '@/components/ui/Button';
+import { formatDate } from '@/utils/date';
+
+// 3. Relativos
+import { UserCard } from './UserCard';
+import type { UserProps } from './types';
+```
+
+## Comentários
+
+```typescript
+// ✅ BOM - JSDoc para componentes públicos
+/**
+ * Exibe o perfil de um usuário com opções de edição.
+ * @param userId - ID do usuário
+ * @param editable - Se o perfil pode ser editado
+ */
+export function UserProfile({ userId, editable }: UserProfileProps) { }
+
+// ❌ RUIM - comentários óbvios
+// Renderiza o botão
+return <button>Click</button>;
+```
+
+Detalhes completos: [`docs/conventions/code-style.md`](../docs/conventions/code-style.md)

@@ -1,0 +1,92 @@
+---
+description: Convenções gerais do projeto Realizah
+alwaysApply: true
+---
+
+# Padrões Gerais Realizah
+
+## Gerenciador de Pacotes
+
+**SEMPRE use `pnpm`**, nunca `npm` ou `yarn`.
+
+```bash
+# ✅ CORRETO
+pnpm install
+pnpm add react
+pnpm --filter storefront dev
+
+# ❌ ERRADO
+npm install
+yarn add react
+```
+
+## Documentação
+
+Antes de implementar features significativas:
+
+1. Consulte [`docs/plans/`](../docs/plans/) para design docs
+2. Consulte [`docs/adr/`](../docs/adr/) para decisões arquiteturais
+3. Consulte [`docs/specs/`](../docs/specs/) para especificações técnicas
+4. Consulte [`docs/conventions/`](../docs/conventions/) para padrões
+
+## Conventional Commits
+
+Todos os commits devem seguir o formato:
+
+```
+<type>(<scope>): <description>
+```
+
+**Types**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `ci`
+
+**Scopes**: `storefront`, `medusa`, `subscription`, `course`, `access-control`, `digital-delivery`, `types`, `utils`
+
+**Exemplos**:
+```bash
+feat(subscription): add plan creation endpoint
+fix(payment): resolve PIX callback timeout
+docs(readme): update installation steps
+```
+
+Detalhes: [`docs/conventions/git-workflow.md`](../docs/conventions/git-workflow.md)
+
+## Imports
+
+Use path aliases configurados:
+
+```typescript
+// ✅ BOM
+import { Button } from '@/components/ui/Button';
+import { formatDate } from '@/utils/date';
+
+// ❌ RUIM
+import { Button } from '../../../components/ui/Button';
+```
+
+## Error Handling
+
+Sempre trate erros adequadamente:
+
+```typescript
+// ✅ BOM
+try {
+  await createUser(data);
+} catch (error) {
+  logger.error('Failed to create user', { error, data });
+  throw new UserCreationError('Unable to create user', { cause: error });
+}
+
+// ❌ RUIM
+try {
+  await createUser(data);
+} catch (error) {
+  // silenciosamente ignora
+}
+```
+
+## Referências Rápidas
+
+- Código: [`docs/conventions/code-style.md`](../docs/conventions/code-style.md)
+- Git: [`docs/conventions/git-workflow.md`](../docs/conventions/git-workflow.md)
+- APIs: [`docs/conventions/api-naming.md`](../docs/conventions/api-naming.md)
+- Arquitetura: [`docs/plans/2026-03-04-monorepo-architecture-design.md`](../docs/plans/2026-03-04-monorepo-architecture-design.md)

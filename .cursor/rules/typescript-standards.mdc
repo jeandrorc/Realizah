@@ -1,0 +1,115 @@
+---
+description: Padrões TypeScript para o projeto Realizah
+globs: "**/*.ts"
+alwaysApply: false
+---
+
+# TypeScript Standards
+
+## Tipos Explícitos
+
+```typescript
+// ✅ BOM - tipos explícitos em parâmetros e retornos públicos
+export function createUser(data: CreateUserInput): Promise<User> {
+  // implementação
+}
+
+// ✅ BOM - inferência em variáveis locais
+const userId = user.id; // tipo inferido
+
+// ❌ RUIM - any
+function processData(data: any) { }
+
+// ✅ BOM - unknown quando tipo não é conhecido
+function processData(data: unknown) {
+  if (typeof data === 'string') {
+    // type narrowing
+  }
+}
+```
+
+## Interfaces vs Types
+
+```typescript
+// ✅ BOM - interface para objetos extensíveis
+interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+// ✅ BOM - type para unions e utilitários
+type UserRole = 'admin' | 'user' | 'guest';
+type PartialUser = Partial<User>;
+```
+
+## Enums
+
+Prefira union types:
+
+```typescript
+// ✅ BOM - union type
+type Status = 'active' | 'inactive' | 'pending';
+
+// ⚠️ OK - enum apenas quando precisa de valores específicos
+enum HttpStatus {
+  OK = 200,
+  NotFound = 404,
+}
+```
+
+## Async/Await
+
+```typescript
+// ✅ BOM - async/await para clareza
+async function fetchUser(id: string): Promise<User> {
+  const response = await fetch(`/api/users/${id}`);
+  return response.json();
+}
+
+// ❌ RUIM - promise chains desnecessárias
+function fetchUser(id: string): Promise<User> {
+  return fetch(`/api/users/${id}`)
+    .then(response => response.json());
+}
+```
+
+## Error Handling
+
+```typescript
+// ✅ BOM - erros tipados
+class UserNotFoundError extends Error {
+  constructor(userId: string) {
+    super(`User ${userId} not found`);
+    this.name = 'UserNotFoundError';
+  }
+}
+
+// ✅ BOM - try/catch com log
+try {
+  await createUser(data);
+} catch (error) {
+  logger.error('Failed to create user', { error, data });
+  throw new UserCreationError('Unable to create user', { cause: error });
+}
+```
+
+## Nomenclatura
+
+```typescript
+// ✅ BOM - camelCase para variáveis e funções
+const userName = 'João';
+function getUserById(id: string) { }
+
+// ✅ BOM - PascalCase para classes
+class UserService { }
+
+// ✅ BOM - UPPER_SNAKE_CASE para constantes
+const MAX_RETRY_ATTEMPTS = 3;
+
+// ✅ BOM - booleanos com prefixo
+const isActive = true;
+const hasPermission = user.role === 'admin';
+```
+
+Detalhes completos: [`docs/conventions/code-style.md`](../docs/conventions/code-style.md)
