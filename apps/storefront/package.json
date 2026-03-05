@@ -36,6 +36,7 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@medusajs/types": "2.13.3",
     "@playwright/test": "^1.58.2",
     "@realizah/tsconfig": "workspace:*",
     "@types/node": "^20.11.5",
