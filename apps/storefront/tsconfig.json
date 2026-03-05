@@ -1,0 +1,12 @@
+{
+  "extends": "@realizah/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "outDir": ".next",
+    "rootDir": ".",
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

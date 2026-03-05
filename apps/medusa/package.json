@@ -1,0 +1,31 @@
+{
+  "name": "medusa",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "medusa develop",
+    "build": "medusa build",
+    "start": "medusa start",
+    "db:setup": "medusa db:setup",
+    "db:migrate": "medusa db:migrate",
+    "db:generate": "medusa db:generate",
+    "seed": "medusa exec ./src/scripts/seed.ts",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist .medusa"
+  },
+  "dependencies": {
+    "@medusajs/medusa": "rc",
+    "@medusajs/utils": "rc",
+    "@realizah/types": "workspace:*",
+    "@realizah/utils": "workspace:*",
+    "awilix": "^8.0.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@medusajs/medusa-cli": "rc",
+    "@realizah/tsconfig": "workspace:*",
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3"
+  }
+}
