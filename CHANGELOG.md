@@ -7,6 +7,143 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-03-04
+
+### Added
+
+#### Course Module (LMS Platform)
+
+- **Tipos de Course** (`@realizah/types`)
+  - `Course`, `CourseModule`, `Lesson`, `Enrollment`, `LessonProgress`, `CourseReview`
+  - Tipos de input: `CreateCourseInput`, `UpdateCourseInput`, `CreateCourseModuleInput`, `UpdateCourseModuleInput`, `CreateLessonInput`, `UpdateLessonInput`, `EnrollInput`, `CompleteLessonInput`, `SubmitQuizInput`, `CreateReviewInput`, `UpdateReviewInput`
+  - Tipos de resposta: `SubmitQuizResult` (score, passed, feedback)
+  - Enums: `CourseLevel` (beginner/intermediate/advanced), `LessonType` (video/text/quiz/assignment/file), `EnrollmentStatus` (active/completed/dropped), `ProgressStatus` (not_started/in_progress/completed), `QuizQuestionType` (multiple_choice/true_false/short_answer), `VideoProvider` (youtube/vimeo/s3)
+  - Tipos de conteúdo: `QuizQuestion`, `LessonContent`
+
+- **Modelos de Dados** (`apps/medusa/src/modules/course/models/`)
+  - `Course`: cursos com níveis, tiers, rating e enrollment count
+  - `CourseModule`: módulos organizacionais com ordem
+  - `Lesson`: aulas com tipos variados e conteúdo JSON
+  - `Enrollment`: matrículas com progresso e certificado
+  - `LessonProgress`: progresso individual por aula com quiz tracking
+  - `CourseReview`: avaliações de 1-5 estrelas
+
+- **Serviços Core** (`apps/medusa/src/modules/course/services/`)
+  - `CourseService`: CRUD de cursos, publicação, rating, filtros por categoria/nível/tier
+  - `CourseModuleService`: gestão de módulos, reordenação, cálculo de duração
+  - `LessonService`: gestão de aulas, validação de conteúdo por tipo
+  - `EnrollmentService`: matrículas, verificação de elegibilidade, completion
+  - `LessonProgressService`: tracking de progresso, quiz attempts, completion
+  - `CourseReviewService`: avaliações, cálculo de rating médio
+
+- **Serviços de Lógica de Negócio** (`apps/medusa/src/modules/course/services/`)
+  - `ProgressManagerService`: cálculo automático de progresso, estatísticas de enrollment, overview de curso, auto-completion
+  - `QuizManagerService`: submissão de quiz, correção automática, validação de estrutura, tracking de tentativas
+  - `CertificateManagerService`: geração de certificados, verificação, metadata, listagem por customer
+
+- **Admin APIs** (`apps/medusa/src/api/admin/courses/`)
+  - `GET/POST /admin/courses` - Listar e criar cursos
+  - `GET/PATCH/DELETE /admin/courses/:id` - CRUD de curso
+  - `POST /admin/courses/:id/publish` - Publicar curso
+  - `GET/POST /admin/courses/modules` - Gerenciar módulos
+  - `GET/PATCH/DELETE /admin/courses/modules/:id` - CRUD de módulo
+  - `GET/POST /admin/courses/modules/lessons` - Gerenciar aulas
+  - `GET/PATCH/DELETE /admin/courses/modules/lessons/:id` - CRUD de aula
+  - `GET /admin/courses/enrollments` - Listar matrículas
+  - `GET /admin/courses/enrollments/:id` - Detalhes de matrícula
+  - `GET /admin/courses/reviews` - Listar avaliações
+  - `DELETE /admin/courses/reviews/:id` - Deletar avaliação
+
+- **Store APIs** (`apps/medusa/src/api/store/courses/`, `apps/medusa/src/api/store/my-courses/`)
+  - `GET /store/courses` - Listar cursos publicados (com filtros)
+  - `GET /store/courses/:id` - Detalhes do curso
+  - `GET /store/courses/:id/modules` - Módulos e aulas do curso
+  - `POST /store/courses/:id/enroll` - Matricular-se no curso
+  - `GET /store/my-courses` - Meus cursos matriculados
+  - `GET /store/my-courses/:id` - Detalhes da matrícula com estatísticas
+  - `GET /store/my-courses/:id/lessons/:lessonId` - Detalhes da aula com progresso
+  - `POST /store/my-courses/:id/lessons/:lessonId/complete` - Completar aula
+  - `POST /store/my-courses/:id/lessons/:lessonId/quiz` - Submeter quiz
+  - `GET /store/my-courses/:id/certificate` - Obter certificado
+  - `POST /store/my-courses/:id/certificate` - Gerar certificado
+  - `POST /store/reviews` - Criar avaliação de curso
+
+- **Subscribers** (`apps/medusa/src/modules/course/subscribers/`)
+  - `enrollment.created`: welcome email, notificar instrutor, analytics
+  - `enrollment.completed`: gerar certificado, email de parabéns, recomendar próximo curso
+  - `lesson.completed`: atualizar progresso, unlock próxima aula, notificação
+  - `quiz.passed`: award badge, notificação de parabéns
+  - `review.created`: atualizar rating do curso, notificar instrutor, moderação
+
+- **Middleware** (`apps/medusa/src/api/middlewares/`)
+  - `verifyCourseAccess`: verificação de acesso por tier e feature
+  - `canEnrollInCourse`: helper para verificar elegibilidade de matrícula
+
+- **Scripts** (`apps/medusa/src/modules/course/scripts/`)
+  - `seed-courses.ts`: 5 cursos padrão para onboarding (free, pro, premium)
+
+- **Migrations** (`apps/medusa/src/modules/course/migrations/`)
+  - `Migration20260304200000`: 6 tabelas com 18 indexes otimizados
+  - Foreign keys com ON DELETE CASCADE
+  - Unique constraints: (customerId, courseId), (enrollmentId, lessonId), (courseId, customerId)
+  - Check constraint: rating entre 1 e 5
+
+### Technical Details
+
+- **Sistema de Progresso Automático**:
+  - Tracking por aula com status (not_started, in_progress, completed)
+  - Cálculo automático de % de conclusão baseado em aulas completadas
+  - Auto-completion quando progresso atinge 100%
+  - Estatísticas: total de aulas, completadas, em progresso, tempo assistido
+
+- **Sistema de Quiz**:
+  - Tipos de questões: múltipla escolha, verdadeiro/falso, resposta curta
+  - Correção automática com comparação de respostas
+  - Suporte a múltiplas respostas corretas
+  - Score em percentual (0-100), nota mínima 70% para aprovação
+  - Tentativas ilimitadas, melhor score mantido
+  - Feedback por questão com explicação opcional
+
+- **Sistema de Certificados**:
+  - Geração automática ao completar 100% do curso
+  - URL única por enrollment
+  - Metadata: curso, customer, data de conclusão, duração, nível
+  - Verificação de autenticidade por URL
+  - Listagem de certificados por customer
+  - **Nota**: Implementação atual gera URL placeholder, integração com PDF pendente
+
+- **Integração com Access Control**:
+  - Verificação de tier (free, pro, premium) por curso
+  - Verificação de feature opcional para acesso granular
+  - Middleware de verificação em enrollment
+  - Helper function para elegibilidade completa
+  - Bloqueio de matrícula se tier insuficiente
+
+- **Event-Driven Architecture**:
+  - 5 subscribers para eventos de curso
+  - TODOs para integração com email, push notifications, analytics
+  - Extensível para gamificação, recomendações, etc.
+
+- **Performance**:
+  - 18 indexes otimizados para queries frequentes
+  - Unique constraints para evitar duplicatas
+  - Cálculo de progresso eficiente com caching
+  - Foreign keys com CASCADE para cleanup automático
+
+### Documentation
+
+- ADR 005: Fase 4 - Course Module (LMS Platform)
+- Plano Detalhado da Fase 4 com breakdown de tasks
+- Especificação completa do Course Module
+
+### Metrics
+
+- 49 arquivos criados (2329+ linhas de código)
+- 6 entidades, 9 services, 23+ REST endpoints
+- 6 tabelas, 18 indexes, 5 subscribers
+- 100% type-safe com @realizah/types
+- 0 erros de ESLint/Prettier
+
 ## [0.3.0] - 2026-03-04
 
 ### Added
