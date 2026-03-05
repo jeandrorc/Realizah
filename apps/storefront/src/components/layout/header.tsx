@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartIcon } from '@/components/store/cart-icon';
+import { MobileNav } from '@/components/layout/mobile-nav';
 
 export function Header() {
   return (
@@ -23,11 +24,12 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-2">
           <CartIcon />
-          <Button variant="ghost" size="icon" asChild>
+          <Button variant="ghost" size="icon" className="hidden md:inline-flex" asChild>
             <Link href="/login" aria-label="Entrar na conta">
               <User className="h-5 w-5" />
             </Link>
           </Button>
+          <MobileNav />
         </div>
       </div>
     </header>
