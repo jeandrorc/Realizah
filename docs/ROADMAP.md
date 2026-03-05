@@ -35,6 +35,7 @@ gantt
 **Duração:** Concluída
 
 **Entregas:**
+
 - [x] Documentação completa do projeto
 - [x] ADRs e especificações técnicas
 - [x] Convenções de código e workflow
@@ -53,6 +54,7 @@ gantt
 **Objetivo:** Estabelecer fundação completa do monorepo.
 
 **Tarefas:**
+
 - [ ] Inicializar Git e instalar Husky
 - [ ] Criar estrutura de pastas
 - [ ] Configurar pnpm workspace
@@ -66,6 +68,7 @@ gantt
 - [ ] Commit e documentação
 
 **Entregas:**
+
 - Monorepo funcional com Turborepo
 - Medusa v2 rodando
 - Next.js 15 rodando
@@ -73,6 +76,7 @@ gantt
 - PostgreSQL configurado
 
 **Documentação:**
+
 - [Plano Detalhado](plans/2026-03-04-fase1-setup-monorepo.md)
 - [Quick Start](plans/QUICK-START-FASE1.md)
 
@@ -87,6 +91,7 @@ gantt
 **Objetivo:** Implementar gestão completa de assinaturas.
 
 **Tarefas:**
+
 - [ ] Criar entidades (SubscriptionPlan, Subscription, SubscriptionInvoice)
 - [ ] Criar migrations
 - [ ] Implementar SubscriptionService
@@ -98,15 +103,18 @@ gantt
 - [ ] Documentação da API
 
 **Entregas:**
+
 - Módulo subscription completo
 - APIs funcionais
 - Testes passando
 - Documentação atualizada
 
 **Dependências:**
+
 - Fase 1 completa
 
 **Especificação:**
+
 - [Subscription Module Spec](specs/subscription-module.md)
 
 ---
@@ -120,6 +128,7 @@ gantt
 **Objetivo:** Implementar controle de acesso por tier.
 
 **Tarefas:**
+
 - [ ] Criar entidades (Feature, AccessRule, CustomerAccess)
 - [ ] Criar migrations
 - [ ] Implementar AccessControlService
@@ -132,15 +141,18 @@ gantt
 - [ ] Documentação da API
 
 **Entregas:**
+
 - Módulo access-control completo
 - Integração com subscription
 - Middleware funcionando
 - Features padrão criadas
 
 **Dependências:**
+
 - Fase 2 completa (subscription events)
 
 **Especificação:**
+
 - [Access Control Module Spec](specs/access-control-module.md)
 
 ---
@@ -154,6 +166,7 @@ gantt
 **Objetivo:** Implementar plataforma LMS completa.
 
 **Tarefas:**
+
 - [ ] Criar entidades (Course, CourseModule, Lesson, Enrollment, LessonProgress)
 - [ ] Criar migrations
 - [ ] Implementar CourseService
@@ -166,15 +179,18 @@ gantt
 - [ ] Documentação da API
 
 **Entregas:**
+
 - Módulo course completo
 - Sistema LMS funcional
 - Certificados gerados
 - Integração com access control
 
 **Dependências:**
+
 - Fase 3 completa (access control)
 
 **Especificação:**
+
 - [Course Module Spec](specs/course-module.md)
 
 ---
@@ -188,6 +204,7 @@ gantt
 **Objetivo:** Implementar entrega segura de produtos digitais.
 
 **Tarefas:**
+
 - [ ] Criar entidades (DigitalProduct, DigitalFile, DigitalPurchase, DownloadLog)
 - [ ] Criar migrations
 - [ ] Implementar DigitalDeliveryService
@@ -200,16 +217,19 @@ gantt
 - [ ] Documentação da API
 
 **Entregas:**
+
 - Módulo digital-delivery completo
 - Integração com S3
 - URLs assinadas funcionando
 - Integração com orders do Medusa
 
 **Dependências:**
+
 - Fase 3 completa (access control)
 - Pode rodar em paralelo com Fase 4a
 
 **Especificação:**
+
 - [Digital Delivery Module Spec](specs/digital-delivery-module.md)
 
 ---
@@ -223,6 +243,7 @@ gantt
 **Objetivo:** Integrar pagamentos com Mercado Pago.
 
 **Tarefas:**
+
 - [ ] Configurar credenciais Mercado Pago
 - [ ] Implementar checkout PIX
 - [ ] Implementar checkout cartão
@@ -234,11 +255,13 @@ gantt
 - [ ] Documentação
 
 **Entregas:**
+
 - Pagamentos funcionando (PIX, cartão, boleto)
 - Assinaturas recorrentes
 - Webhooks configurados
 
 **Dependências:**
+
 - Fase 2 completa (subscription)
 - Fases 4a e 4b completas
 
@@ -246,13 +269,14 @@ gantt
 
 ### 🎨 Fase 6: Frontend Storefront
 
-**Status:** ⏳ Aguardando Fase 5  
+**Status:** ✅ Completa  
 **Duração estimada:** 6-7 dias  
 **Responsável:** Agente 3 ou novo agente
 
 **Objetivo:** Implementar interface completa da loja e área de membros.
 
 **Tarefas:**
+
 - [ ] Design system e componentes UI
 - [ ] Página inicial e navegação
 - [ ] Catálogo de produtos
@@ -268,12 +292,14 @@ gantt
 - [ ] Otimização de performance
 
 **Entregas:**
+
 - Storefront completo e funcional
 - Área de membros
 - Interface responsiva
 - Performance otimizada
 
 **Dependências:**
+
 - Todas as fases anteriores completas
 - APIs backend funcionando
 
@@ -288,6 +314,7 @@ gantt
 **Objetivo:** Configurar pipeline de CI/CD e fazer deploy inicial.
 
 **Tarefas:**
+
 - [ ] Configurar GitHub Actions
 - [ ] Setup de ambientes (staging, production)
 - [ ] Configurar deploy do Medusa
@@ -301,12 +328,14 @@ gantt
 - [ ] Deploy inicial
 
 **Entregas:**
+
 - Pipeline CI/CD funcionando
 - Deploy automático
 - Ambientes staging e production
 - Monitoramento configurado
 
 **Dependências:**
+
 - Fase 6 completa
 - Todas as features implementadas
 
@@ -336,43 +365,49 @@ Após a Fase 3, as Fases 4a e 4b podem ser executadas em paralelo por agentes di
 
 ## 📊 Progresso Geral
 
-| Fase | Status | Progresso | Responsável |
-|------|--------|-----------|-------------|
-| 0. Documentação | ✅ Completa | 100% | Concluída |
-| 1. Setup Monorepo | 🚧 Em Progresso | 0% | Agente Principal |
-| 2. Subscription | ⏳ Aguardando | 0% | Agente 1 |
-| 3. Access Control | ⏳ Aguardando | 0% | Agente 2 |
-| 4a. Course | ⏳ Aguardando | 0% | Agente 3 |
-| 4b. Digital Delivery | ⏳ Aguardando | 0% | Agente 4 |
-| 5. Mercado Pago | ⏳ Aguardando | 0% | TBD |
-| 6. Frontend | ⏳ Aguardando | 0% | TBD |
-| 7. CI/CD e Deploy | ⏳ Aguardando | 0% | TBD |
+| Fase                 | Status          | Progresso | Responsável      |
+| -------------------- | --------------- | --------- | ---------------- |
+| 0. Documentação      | ✅ Completa     | 100%      | Concluída        |
+| 1. Setup Monorepo    | 🚧 Em Progresso | 0%        | Agente Principal |
+| 2. Subscription      | ⏳ Aguardando   | 0%        | Agente 1         |
+| 3. Access Control    | ⏳ Aguardando   | 0%        | Agente 2         |
+| 4a. Course           | ⏳ Aguardando   | 0%        | Agente 3         |
+| 4b. Digital Delivery | ⏳ Aguardando   | 0%        | Agente 4         |
+| 5. Mercado Pago      | ⏳ Aguardando   | 0%        | TBD              |
+| 6. Frontend          | ✅ Completa     | 100%      | 2026-03-05       |
+| 7. CI/CD e Deploy    | ⏳ Aguardando   | 0%        | TBD              |
 
 ---
 
 ## 🎯 Milestones
 
 ### M1: Fundação Completa
+
 - **Data alvo:** Após Fase 1
 - **Critério:** Monorepo funcional, Medusa e Next.js rodando
 
 ### M2: Backend Core Completo
+
 - **Data alvo:** Após Fase 3
 - **Critério:** Subscription e Access Control funcionando
 
 ### M3: Features Completas
+
 - **Data alvo:** Após Fases 4a e 4b
 - **Critério:** Course e Digital Delivery funcionando
 
 ### M4: Pagamentos Integrados
+
 - **Data alvo:** Após Fase 5
 - **Critério:** Mercado Pago funcionando com todos os métodos
 
 ### M5: MVP Completo
+
 - **Data alvo:** Após Fase 6
 - **Critério:** Frontend completo e funcional
 
 ### M6: Produção
+
 - **Data alvo:** Após Fase 7
 - **Critério:** Deploy em produção com CI/CD
 
@@ -383,6 +418,7 @@ Após a Fase 3, as Fases 4a e 4b podem ser executadas em paralelo por agentes di
 ### Estimativas
 
 As estimativas de duração são baseadas em:
+
 - Complexidade técnica de cada módulo
 - Dependências entre módulos
 - Tempo para testes e documentação
@@ -390,6 +426,7 @@ As estimativas de duração são baseadas em:
 ### Flexibilidade
 
 O roadmap é flexível e pode ser ajustado conforme:
+
 - Feedback durante implementação
 - Descoberta de requisitos adicionais
 - Mudanças de prioridade
@@ -397,6 +434,7 @@ O roadmap é flexível e pode ser ajustado conforme:
 ### Documentação
 
 Cada fase tem:
+
 - Especificação técnica detalhada em `docs/specs/`
 - Plano de implementação (quando aplicável)
 - ADRs para decisões importantes

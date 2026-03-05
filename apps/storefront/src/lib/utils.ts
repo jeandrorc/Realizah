@@ -1,0 +1,17 @@
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatCurrency(amount: number, currency: string = 'BRL'): string {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: currency.toUpperCase(),
+  }).format(amount / 100);
+}
+
+export function formatDate(date: Date | string): string {
+  return new Intl.DateTimeFormat('pt-BR').format(new Date(date));
+}
