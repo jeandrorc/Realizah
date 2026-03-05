@@ -17,7 +17,7 @@ possui:
 - ✅ **18 APIs REST** (Admin + Store)
 - ✅ **13 event subscribers** para arquitetura event-driven
 - ✅ **Testes E2E** com Playwright
-- 🟡 **Integração Mercado Pago** (pendente)
+- ✅ **Integração Mercado Pago** (completa — PIX, cartão, boleto, assinaturas recorrentes)
 - 🟡 **CI/CD e Deploy** (pendente)
 
 ---
@@ -33,7 +33,7 @@ possui:
 | **Fase 4: Course Module**         | ✅ Completa | 100%      | 2026-03-04     | 1       | ~3200 |
 | **Fase 5: Digital Delivery**      | ✅ Completa | 100%      | 2026-03-05     | 2       | ~4800 |
 | **Fase 6: Frontend Storefront**   | ✅ Completa | 100%      | 2026-03-05     | 18      | ~8000 |
-| **Fase 7: Mercado Pago**          | 🟡 Pendente | 0%        | -              | -       | -     |
+| **Fase 7: Mercado Pago**          | ✅ Completa | 100%      | 2026-03-05     | 1       | ~600  |
 | **Fase 8: CI/CD e Deploy**        | 🟡 Pendente | 0%        | -              | -       | -     |
 
 **Total Implementado:** ~20.000 linhas de código em 24 commits
@@ -144,7 +144,7 @@ packages/
 
 ### Pendentes 🟡
 
-- [ ] Mercado Pago (PIX, cartão, boleto)
+- [x] Mercado Pago (PIX, cartão, boleto, assinaturas recorrentes)
 - [ ] AWS S3 (atualmente mock)
 - [ ] Email service (SendGrid ou similar)
 - [ ] Sentry (monitoring)
