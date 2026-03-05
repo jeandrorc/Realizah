@@ -14,7 +14,21 @@ module.exports = defineConfig({
     },
   },
   modules: [
-    // Módulos customizados serão registrados após build
-    // TODO: Adicionar subscription module após implementar package separado
+    {
+      resolve: './src/modules/mercadopago',
+      options: {
+        providers: [
+          {
+            resolve: './src/modules/mercadopago',
+            id: 'mercadopago',
+            options: {
+              accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
+              webhookSecret: process.env.MERCADOPAGO_WEBHOOK_SECRET,
+              sandbox: process.env.MERCADOPAGO_SANDBOX === 'true',
+            },
+          },
+        ],
+      },
+    },
   ],
 });
