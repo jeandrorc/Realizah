@@ -23,6 +23,15 @@ export async function addToCart(
   return cart;
 }
 
+export async function updateCartItem(
+  cartId: string,
+  lineItemId: string,
+  quantity: number,
+): Promise<HttpTypes.StoreCart> {
+  const { cart } = await medusa.store.cart.updateLineItem(cartId, lineItemId, { quantity });
+  return cart;
+}
+
 export async function removeFromCart(
   cartId: string,
   lineItemId: string,

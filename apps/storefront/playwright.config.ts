@@ -20,9 +20,11 @@ export default defineConfig({
   webServer: process.env.CI
     ? undefined
     : {
-        command: 'pnpm dev',
+        command: process.env.E2E_WITH_MEDUSA
+          ? 'cd ../.. && pnpm dev'
+          : 'pnpm --filter storefront dev',
         url: 'http://localhost:3000',
-        reuseExistingServer: true,
-        timeout: 120 * 1000,
+        reuseExistingServer: !process.env.E2E_WITH_MEDUSA,
+        timeout: 180 * 1000,
       },
 });

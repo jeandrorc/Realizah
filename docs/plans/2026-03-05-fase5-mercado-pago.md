@@ -3,6 +3,55 @@
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan
 > task-by-task.
 
+---
+
+## ⚠️ Blocker Atual (2026-03-06)
+
+### Progresso da Ordem Recomendada
+
+| Etapa                | Status | Detalhes                                                                         |
+| -------------------- | ------ | -------------------------------------------------------------------------------- |
+| 1. Corrigir config   | ✅     | Mercado Pago registrado como **provider** do Payment Module (não módulo de topo) |
+| 2. Atualizar Medusa  | ✅     | `^2.7.1` → 2.13.3 (framework, medusa, types, utils)                              |
+| 3. Migrations        | ✅     | `pnpm --filter medusa db:migrate` — schema atualizado (deleted_at, links)        |
+| 4. Mercado Pago path | ✅     | Extraído para `packages/mercadopago-provider`; config usa path.resolve           |
+| 5. Medusa dev        | ✅     | Desbloqueado — moduleResolution + exclude \_api_disabled                         |
+
+### Bloqueadores Resolvidos
+
+**A) Mercado Pago Provider** ✅ — Extraído para `packages/mercadopago-provider`, config usa
+`path.resolve`
+
+**B) API Routes Loader**
+
+- **Erro:** `Cannot read properties of undefined (reading 'def')` (Zod) ou
+  `Cannot find module '@medusajs/framework/http'` (TS)
+- **Causa:** (1) Conflito Zod v3 vs v4 em monorepo pnpm; (2) `moduleResolution: "node"` não resolve
+  subpath exports
+- **Correções aplicadas:**
+  - `pnpm.overrides`: `@medusajs/deps>zod` e `medusa>zod` → 3.25.76
+  - `packages/tsconfig/medusa.json`: `moduleResolution` → `node16`
+  - `apps/medusa/tsconfig.json`: exclude `src/_api_disabled`
+- **Status:** ✅ Resolvido — `pnpm --filter medusa dev` sobe com sucesso (Server ready on port 9000)
+
+**C) Dashboard / Draft Order** — Medusa dev sobe com sucesso; draft-order carregado
+
+### Status Atual
+
+- **Módulo Mercado Pago:** `packages/mercadopago-provider` ativo em `medusa-config.js`
+- **Rotas customizadas:** Em `_api_disabled/` (admin, store: courses, subscriptions, payments,
+  webhooks) — pendente restaurar
+
+### Próximos Passos (Ordem Recomendada)
+
+1. ~~**Desbloquear Medusa dev**~~ ✅
+2. ~~**Reativar Mercado Pago**~~ ✅ via `@realizah/mercadopago-provider`
+3. **Restaurar rotas** (pendente)
+   - Mover de `_api_disabled/` para `api/` quando build config resolver @realizah/types
+   - Corrigir erros TS (accessControlService unknown, etc.)
+
+---
+
 **Goal:** Implementar provider de pagamentos Mercado Pago no Medusa v2, cobrindo PIX, cartão de
 crédito, boleto e assinaturas recorrentes (preapproval).
 

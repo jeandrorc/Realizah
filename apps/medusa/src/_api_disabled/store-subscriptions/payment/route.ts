@@ -47,7 +47,6 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     return res.status(200).json({
       preApprovalId: preApproval.id,
       checkoutUrl: preApproval.init_point,
-      sandboxUrl: preApproval.sandbox_init_point,
       status: preApproval.status,
     });
   } catch (error) {

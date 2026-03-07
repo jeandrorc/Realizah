@@ -1,3 +1,4 @@
+const path = require('path');
 const { defineConfig, loadEnv } = require('@medusajs/framework/utils');
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd());
@@ -15,15 +16,15 @@ module.exports = defineConfig({
   },
   modules: [
     {
-      resolve: './src/modules/mercadopago',
+      resolve: '@medusajs/medusa/payment',
       options: {
         providers: [
           {
-            resolve: './src/modules/mercadopago',
+            resolve: path.resolve(__dirname, 'node_modules/@realizah/mercadopago-provider'),
             id: 'mercadopago',
             options: {
-              accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
-              webhookSecret: process.env.MERCADOPAGO_WEBHOOK_SECRET,
+              accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN ?? '',
+              webhookSecret: process.env.MERCADOPAGO_WEBHOOK_SECRET ?? '',
               sandbox: process.env.MERCADOPAGO_SANDBOX === 'true',
             },
           },

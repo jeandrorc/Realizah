@@ -7,7 +7,15 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/dashboard', '/my-courses', '/my-downloads', '/profile', '/api/', '/admin/'],
+        disallow: [
+          '/checkout',
+          '/dashboard',
+          '/my-courses',
+          '/my-downloads',
+          '/profile',
+          '/api/',
+          '/admin/',
+        ],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,

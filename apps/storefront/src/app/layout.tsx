@@ -1,11 +1,20 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { Inter } from 'next/font/google';
+import { Bebas_Neue, Inter } from 'next/font/google';
 import { Providers } from '@/components/providers';
 import { BASE_URL } from '@/lib/config';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-display',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -33,7 +42,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html
+      lang="pt-BR"
+      suppressHydrationWarning
+      className={`${bebasNeue.variable} ${inter.variable}`}
+    >
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>

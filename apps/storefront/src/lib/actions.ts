@@ -3,13 +3,18 @@
 import { redirect } from 'next/navigation';
 import { loginWithMedusa, registerWithMedusa, logoutFromMedusa } from './api';
 
-export async function loginAction(email: string, password: string): Promise<{ error?: string }> {
+export async function loginAction(
+  email: string,
+  password: string,
+  redirectTo?: string,
+): Promise<{ error?: string }> {
   try {
     await loginWithMedusa(email, password);
   } catch {
     return { error: 'Email ou senha incorretos. Tente novamente.' };
   }
-  redirect('/dashboard');
+  const target = redirectTo && redirectTo.startsWith('/') ? redirectTo : '/dashboard';
+  redirect(target);
 }
 
 export async function registerAction(data: {

@@ -1,65 +1,58 @@
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import { ProductDetailMounter } from '@/mounters/product/product-detail.mounter';
+import { Suspense } from 'react';
+import Link from 'next/link';
 import type { Metadata } from 'next';
-import { getProduct } from '@/lib/api/products';
-import { formatCurrency } from '@/lib/utils';
-import { AddToCartButton } from '@/components/store/add-to-cart-button';
 
-interface ProductPageProps {
+interface Props {
   params: Promise<{ handle: string }>;
 }
 
-export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = await params;
-  const product = await getProduct(handle);
-  if (!product) return {};
   return {
-    title: product.title,
-    description: product.description?.slice(0, 160) ?? undefined,
+    title: handle.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+    description: `Compre ${handle} com os melhores preços e condições.`,
   };
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
+function ProductDetailSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+      <div className="aspect-square rounded-lg bg-surface animate-pulse" />
+      <div className="space-y-4">
+        {[80, 60, 40, 40, 60].map((w, i) => (
+          <div
+            key={i}
+            className="h-6 bg-surface rounded animate-pulse"
+            style={{ width: `${w}%` }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default async function ProductDetailPage({ params }: Props) {
   const { handle } = await params;
-  const product = await getProduct(handle);
-
-  if (!product) notFound();
-
-  const firstVariant = product.variants?.[0];
-  const price = firstVariant?.calculated_price;
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div className="aspect-square bg-muted rounded-lg overflow-hidden">
-          {product.thumbnail ? (
-            <Image
-              src={product.thumbnail}
-              alt={product.title ?? product.id}
-              width={600}
-              height={600}
-              className="object-cover w-full h-full"
-              priority
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-6xl">🛍️</div>
-          )}
-        </div>
-        <div className="flex flex-col gap-6">
-          <div>
-            <h1 className="text-3xl font-bold">{product.title}</h1>
-            {price?.calculated_amount != null && (
-              <p className="text-2xl font-bold text-primary mt-2">
-                {formatCurrency(price.calculated_amount, price.currency_code ?? 'BRL')}
-              </p>
-            )}
-          </div>
-          {product.description && (
-            <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-          )}
-          {firstVariant?.id && <AddToCartButton variantId={firstVariant.id} />}
-        </div>
-      </div>
+    <div className="container mx-auto px-4 py-8">
+      {/* Breadcrumb */}
+      <nav className="text-xs text-zinc-400 mb-8">
+        <Link href="/" className="hover:text-ink">
+          Home
+        </Link>
+        <span className="mx-2">/</span>
+        <Link href="/products" className="hover:text-ink">
+          Produtos
+        </Link>
+        <span className="mx-2">/</span>
+        <span className="text-ink font-medium capitalize">{handle.replace(/-/g, ' ')}</span>
+      </nav>
+
+      <Suspense fallback={<ProductDetailSkeleton />}>
+        <ProductDetailMounter handle={handle} />
+      </Suspense>
     </div>
   );
 }

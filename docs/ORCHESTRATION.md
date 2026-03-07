@@ -1,8 +1,8 @@
 # 🎯 Orquestração do Projeto Realizah
 
 **Agente Orquestrador:** Ativo  
-**Data:** 2026-03-05  
-**Versão:** 0.5.0
+**Data:** 2026-03-06  
+**Versão:** 0.6.1
 
 ---
 
@@ -11,10 +11,11 @@
 ### Progresso Geral
 
 - **Fases Completas:** 6/8 (75%)
-- **LOC Implementadas:** ~20.000 linhas
-- **Commits:** 25 commits
+- **LOC Implementadas:** ~21.000 linhas
 - **Backend:** ✅ 100% Completo (4 módulos)
 - **Frontend:** ✅ 100% Completo (15+ páginas)
+- **Integração Medusa ↔ Storefront:** ✅ Produtos e categorias com seed realista (16 produtos, 8
+  categorias)
 - **Integrações:** 🟡 Mercado Pago pendente
 
 ### Módulos Backend
@@ -35,6 +36,37 @@
 | Auth      | ✅       | 2       | 4           |
 | Members   | ✅       | 8       | 12          |
 | **TOTAL** | **100%** | **15**  | **24**      |
+
+### Testes E2E (2026-03-07)
+
+| Item                                                               | Status |
+| ------------------------------------------------------------------ | ------ |
+| Playwright configurado                                             | ✅     |
+| Specs: home, auth, products, cart, checkout, subscription, courses | ✅     |
+| Script `pnpm e2e`                                                  | ✅     |
+| Doc `docs/testing/e2e.md`                                          | ✅     |
+
+### Integração Medusa ↔ Storefront (2026-03-06)
+
+| Item                     | Status                                |
+| ------------------------ | ------------------------------------- |
+| Seed realista (produtos) | ✅ 16 produtos, variantes, preços BRL |
+| Seed categorias          | ✅ 8 categorias                       |
+| Seed coleções (brands)   | ✅ 6 coleções                         |
+| API produtos + preços    | ✅ Store API com `region_id`          |
+| API categorias           | ✅ `/store/product-categories`        |
+| Publishable API Key      | ✅ Gerada e linkada ao sales channel  |
+| Fallback para mock       | ✅ Se Medusa offline, usa mock        |
+
+### Medusa Backend (2026-03-06)
+
+| Item                            | Status                                                            |
+| ------------------------------- | ----------------------------------------------------------------- |
+| Upgrade para v2.13.3            | ✅ framework, medusa, types, utils                                |
+| Migrations executadas           | ✅ schema atualizado (deleted_at, links)                          |
+| Config Payment Module           | ✅ Mercado Pago como provider (desabilitado)                      |
+| Middlewares (defineMiddlewares) | ✅ Corrigido                                                      |
+| Medusa dev inicia               | ✅ Desbloqueado — moduleResolution node16, exclude \_api_disabled |
 
 ---
 
@@ -66,6 +98,7 @@ graph LR
 - **Duração Estimada:** 3-4 dias
 - **Responsável:** A definir
 - **Dependências:** ✅ Todas resolvidas
+- **⚠️ Blockers:** Nenhum ativo. Mercado Pago reativado via `@realizah/mercadopago-provider`.
 
 ### Objetivos
 
@@ -78,7 +111,7 @@ graph LR
 
 #### Dia 1: Setup e Estrutura
 
-- [ ] Criar branch `feature/fase7-mercado-pago`
+- [ ] Criar branch `feature/fase5-mercado-pago`
 - [ ] Obter credenciais sandbox Mercado Pago
 - [ ] Criar especificação técnica (se não existir)
 - [ ] Criar estrutura de módulo:
@@ -335,27 +368,42 @@ Launch → Monitorar → Coletar Feedback → Priorizar → Implementar → Depl
 
 ### Melhorias Planejadas (Backlog)
 
-1. **Admin Dashboard** (Prioridade: Alta)
+1. **Desbloquear Medusa dev** (Prioridade: Crítica)
+   - Resolver API Routes loader: `Cannot read properties of undefined (reading 'def')`
+   - Resolver `@medusajs/draft-order/admin` (Vite)
+   - Investigar ApiLoader em `@medusajs/medusa` e `@medusajs/framework`
+
+2. **Reativar Mercado Pago provider** (Prioridade: Alta)
+   - Extrair para `packages/mercadopago-provider` e buildar, ou
+   - Compilar `src/modules/mercadopago` e apontar para `./dist/modules/mercadopago`
+   - Reativar em `medusa-config.js`
+
+3. **Re-ativar rotas customizadas Medusa** (Prioridade: Alta)
+   - Rotas em `_api_disabled/` (admin, store: courses, subscriptions, payments, webhooks)
+   - Depende de Medusa dev estável
+   - Ver: `apps/medusa/src/_api_disabled/`
+
+4. **Admin Dashboard** (Prioridade: Alta)
    - Interface web para admin
    - Analytics e métricas
    - Gestão de usuários
 
-2. **Email Service** (Prioridade: Alta)
+5. **Email Service** (Prioridade: Alta)
    - SendGrid/Mailgun integration
    - Templates de email
    - Notificações automáticas
 
-3. **Testes Backend** (Prioridade: Média)
+6. **Testes Backend** (Prioridade: Média)
    - Testes unitários
    - Testes de integração
    - Coverage > 80%
 
-4. **Performance Optimization** (Prioridade: Média)
+7. **Performance Optimization** (Prioridade: Média)
    - Caching (Redis)
    - CDN para assets
    - Database query optimization
 
-5. **Features Avançadas** (Prioridade: Baixa)
+8. **Features Avançadas** (Prioridade: Baixa)
    - Gamificação
    - Social features
    - Mobile app
@@ -412,7 +460,7 @@ feature/* (desenvolvimento)
 **Comando:**
 
 ```bash
-git checkout -b feature/fase7-mercado-pago
+git checkout -b feature/fase5-mercado-pago
 ```
 
 **Primeira Task:**
@@ -441,6 +489,8 @@ git checkout -b feature/fase7-mercado-pago
 
 ### Áreas de Atenção
 
+🟡 **Rotas customizadas Medusa:** Admin, courses, subscriptions, webhooks em `_api_disabled/` —
+reativar quando Medusa RC suportar módulos locais  
 🟡 **Testes Backend:** Sem cobertura ainda (post-MVP)  
 🟡 **S3 Mock:** Requer integração real na Fase 7  
 🟡 **Email Service:** TODOs espalhados (post-MVP)  
@@ -457,5 +507,7 @@ git checkout -b feature/fase7-mercado-pago
 ---
 
 **Status:** 🟢 Orquestração Completa  
-**Próximo Update:** Após conclusão da Fase 5  
+**Última atualização:** 2026-03-06 — Medusa v2.13.3, migrations OK, backlog evoluído (desbloquear
+dev → Mercado Pago → rotas)  
+**Próximo Update:** Após Medusa dev estável  
 **Contato:** Consultar [CONTRIBUTING.md](../CONTRIBUTING.md)

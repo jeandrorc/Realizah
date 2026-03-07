@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -18,6 +19,8 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirect');
   const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
@@ -29,7 +32,7 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     setServerError(null);
-    const result = await loginAction(data.email, data.password);
+    const result = await loginAction(data.email, data.password, redirectTo ?? undefined);
     if (result?.error) {
       setServerError(result.error);
     }

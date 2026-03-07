@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { BookOpen, Download, CreditCard } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCustomer } from '@/lib/api/auth';
@@ -56,24 +57,24 @@ export default async function DashboardPage() {
             <CardTitle className="text-base">Acesso Rápido</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <a
+            <Link
               href="/my-courses"
               className="flex items-center gap-2 text-sm text-primary hover:underline"
             >
               <BookOpen className="h-4 w-4" /> Ver meus cursos
-            </a>
-            <a
+            </Link>
+            <Link
               href="/my-downloads"
               className="flex items-center gap-2 text-sm text-primary hover:underline"
             >
               <Download className="h-4 w-4" /> Ver meus downloads
-            </a>
-            <a
+            </Link>
+            <Link
               href="/subscription"
               className="flex items-center gap-2 text-sm text-primary hover:underline"
             >
               <CreditCard className="h-4 w-4" /> Gerenciar assinatura
-            </a>
+            </Link>
           </CardContent>
         </Card>
         <Card>
@@ -81,18 +82,18 @@ export default async function DashboardPage() {
             <CardTitle className="text-base">Explorar</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <a
+            <Link
               href="/courses"
               className="flex items-center gap-2 text-sm text-primary hover:underline"
             >
               <BookOpen className="h-4 w-4" /> Catálogo de cursos
-            </a>
-            <a
+            </Link>
+            <Link
               href="/products"
               className="flex items-center gap-2 text-sm text-primary hover:underline"
             >
               <Download className="h-4 w-4" /> Ver produtos
-            </a>
+            </Link>
           </CardContent>
         </Card>
       </div>

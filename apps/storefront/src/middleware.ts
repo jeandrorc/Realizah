@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const PROTECTED_PATHS = ['/dashboard', '/my-courses', '/my-downloads', '/subscription', '/profile'];
+const PROTECTED_PATHS = [
+  '/dashboard',
+  '/my-courses',
+  '/my-downloads',
+  '/subscription',
+  '/profile',
+  '/orders',
+];
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('_medusa_jwt')?.value;
@@ -25,5 +32,6 @@ export const config = {
     '/my-downloads/:path*',
     '/subscription/:path*',
     '/profile/:path*',
+    '/orders',
   ],
 };
