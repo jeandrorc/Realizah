@@ -1,8 +1,8 @@
 # 🎯 Orquestração do Projeto Realizah
 
 **Agente Orquestrador:** Ativo  
-**Data:** 2026-03-06  
-**Versão:** 0.6.1
+**Data:** 2026-03-07  
+**Versão:** 0.6.2
 
 ---
 
@@ -10,13 +10,13 @@
 
 ### Progresso Geral
 
-- **Fases Completas:** 6/8 (75%)
+- **Fases Completas:** 7/8 (87%)
 - **LOC Implementadas:** ~21.000 linhas
 - **Backend:** ✅ 100% Completo (4 módulos)
 - **Frontend:** ✅ 100% Completo (15+ páginas)
 - **Integração Medusa ↔ Storefront:** ✅ Produtos e categorias com seed realista (16 produtos, 8
   categorias)
-- **Integrações:** 🟡 Mercado Pago pendente
+- **Integrações:** ✅ Mercado Pago reativado (packages/mercadopago-provider)
 
 ### Módulos Backend
 
@@ -64,7 +64,7 @@
 | ------------------------------- | ----------------------------------------------------------------- |
 | Upgrade para v2.13.3            | ✅ framework, medusa, types, utils                                |
 | Migrations executadas           | ✅ schema atualizado (deleted_at, links)                          |
-| Config Payment Module           | ✅ Mercado Pago como provider (desabilitado)                      |
+| Config Payment Module           | ✅ Mercado Pago como provider (@realizah/mercadopago-provider)     |
 | Middlewares (defineMiddlewares) | ✅ Corrigido                                                      |
 | Medusa dev inicia               | ✅ Desbloqueado — moduleResolution node16, exclude \_api_disabled |
 
@@ -368,15 +368,11 @@ Launch → Monitorar → Coletar Feedback → Priorizar → Implementar → Depl
 
 ### Melhorias Planejadas (Backlog)
 
-1. **Desbloquear Medusa dev** (Prioridade: Crítica)
-   - Resolver API Routes loader: `Cannot read properties of undefined (reading 'def')`
-   - Resolver `@medusajs/draft-order/admin` (Vite)
-   - Investigar ApiLoader em `@medusajs/medusa` e `@medusajs/framework`
+1. ~~**Desbloquear Medusa dev**~~ ✅ (2026-03-07)
+   - Resolvido: moduleResolution node16, exclude _api_disabled, Zod overrides
 
-2. **Reativar Mercado Pago provider** (Prioridade: Alta)
-   - Extrair para `packages/mercadopago-provider` e buildar, ou
-   - Compilar `src/modules/mercadopago` e apontar para `./dist/modules/mercadopago`
-   - Reativar em `medusa-config.js`
+2. ~~**Reativar Mercado Pago provider**~~ ✅ (2026-03-07)
+   - Extraído para `packages/mercadopago-provider`, config usa path.resolve
 
 3. **Re-ativar rotas customizadas Medusa** (Prioridade: Alta)
    - Rotas em `_api_disabled/` (admin, store: courses, subscriptions, payments, webhooks)
@@ -455,25 +451,15 @@ feature/* (desenvolvimento)
 
 ### Próxima Ação Imediata
 
-**INICIAR FASE 5: INTEGRAÇÃO MERCADO PAGO**
+**ATACAR BACKLOG — Fase 5 concluída**
 
-**Comando:**
+**Prioridade 1:** Restaurar rotas de `_api_disabled/` para `api/` (quando build permitir)  
+**Prioridade 2:** Fase 7 — CI/CD (GitHub Actions: build, lint, E2E)  
+**Prioridade 3:** Admin Dashboard, Email Service, Testes Backend
 
-```bash
-git checkout -b feature/fase5-mercado-pago
-```
+**Comando para CI:** `.github/workflows/ci.yml` criado
 
-**Primeira Task:**
-
-1. Obter credenciais sandbox Mercado Pago
-2. Criar especificação técnica detalhada
-3. Instalar SDK: `pnpm add mercadopago`
-4. Criar estrutura de módulo
-5. Configurar variáveis de ambiente
-
-**Responsável:** Agente de Implementação (você ou outro agente)
-
-**Prazo:** 4 dias (2026-03-09)
+**Prazo:** Fase 7 em 2-3 dias
 
 ---
 
@@ -498,7 +484,7 @@ reativar quando Medusa RC suportar módulos locais
 
 ### Recomendações
 
-1. **Foco total na Fase 5:** Mercado Pago é crítico
+1. **Fase 5 concluída:** Mercado Pago reativado — foco em Fase 7 (CI/CD)
 2. **Testes extensivos:** Sandbox deve simular produção
 3. **Documentação contínua:** ADR e CHANGELOG obrigatórios
 4. **Code review:** Mesmo trabalhando solo, revisar código
@@ -507,7 +493,6 @@ reativar quando Medusa RC suportar módulos locais
 ---
 
 **Status:** 🟢 Orquestração Completa  
-**Última atualização:** 2026-03-06 — Medusa v2.13.3, migrations OK, backlog evoluído (desbloquear
-dev → Mercado Pago → rotas)  
-**Próximo Update:** Após Medusa dev estável  
+**Última atualização:** 2026-03-07 — Medusa dev OK, Mercado Pago reativado, CI workflow criado, próximo: rotas + deploy  
+**Próximo Update:** Após Fase 7 CI/CD  
 **Contato:** Consultar [CONTRIBUTING.md](../CONTRIBUTING.md)
