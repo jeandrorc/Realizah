@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoginForm } from '@/components/auth/login-form';
 
@@ -13,7 +14,9 @@ export default function LoginPage() {
           <CardDescription>Bem-vindo de volta à Realizah</CardDescription>
         </CardHeader>
         <CardContent>
-          <LoginForm />
+          <Suspense fallback={<div className="h-10 animate-pulse rounded bg-muted" />}>
+            <LoginForm />
+          </Suspense>
         </CardContent>
       </Card>
     </div>
