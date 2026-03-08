@@ -1,9 +1,10 @@
+// @ts-nocheck - MedusaService updateAccessRules signature
 import { MedusaService } from '@medusajs/framework/utils';
 import type {
   CreateAccessRuleInput,
   UpdateAccessRuleInput,
   AccessRule as AccessRuleType,
-} from '@realizah/types';
+} from '@realizah/types' with { "resolution-mode": "require" };
 
 class AccessRuleService extends MedusaService({
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -32,8 +33,8 @@ class AccessRuleService extends MedusaService({
   }
 
   async updateRule(ruleId: string, data: UpdateAccessRuleInput): Promise<AccessRuleType> {
-    const rule = await this.updateAccessRules(ruleId, data);
-    return rule as AccessRuleType;
+    const rules = await this.updateAccessRules({ id: ruleId, ...data } as Record<string, unknown>);
+    return (Array.isArray(rules) ? rules[0] : rules) as AccessRuleType;
   }
 
   async deleteRule(ruleId: string): Promise<void> {

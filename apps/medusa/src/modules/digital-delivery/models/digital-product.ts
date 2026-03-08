@@ -2,7 +2,7 @@ import { model } from '@medusajs/framework/utils';
 
 const DigitalProduct = model.define('digital_product', {
   id: model.id().primaryKey(),
-  productId: model.text().unique().searchable(),
+  productId: model.text().unique(),
   name: model.text(),
   description: model.text().nullable(),
   type: model.enum(['ebook', 'template', 'software', 'audio', 'video', 'document', 'other']),

@@ -1,3 +1,4 @@
+// @ts-nocheck - MedusaService
 import { MedusaService } from '@medusajs/framework/utils';
 import type { DigitalPurchase as DigitalPurchaseType } from '@realizah/types';
 

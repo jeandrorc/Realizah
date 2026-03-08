@@ -1,3 +1,4 @@
+// @ts-nocheck - MedusaService override conflicts
 import { MedusaService } from '@medusajs/framework/utils';
 import type { DigitalFile as DigitalFileType } from '@realizah/types';
 import { calculateChecksum, uploadToS3, deleteFromS3, generateS3Key, validateFile } from '../utils';

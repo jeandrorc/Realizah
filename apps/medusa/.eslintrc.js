@@ -6,10 +6,14 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.ts', '*.tsx'],
+      files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
       plugins: ['@typescript-eslint'],
       extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': ['error', { 'ts-nocheck': true }],
+        '@typescript-eslint/no-var-requires': 'off',
+      },
     },
   ],
 };

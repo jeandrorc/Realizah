@@ -1,5 +1,7 @@
 import type { MedusaRequest, MedusaResponse, MedusaNextFunction } from '@medusajs/framework/http';
 
+type ReqWithAuth = MedusaRequest & { user?: { customer_id?: string }; body?: Record<string, unknown> };
+
 /**
  * Middleware to verify customer access to digital products based on tier
  */
@@ -8,22 +10,24 @@ export async function verifyDigitalProductAccess(
   res: MedusaResponse,
   next: MedusaNextFunction,
 ) {
-  const customerId = req.user?.customer_id;
+  const authReq = req as ReqWithAuth;
+  const customerId = authReq.user?.customer_id;
 
   if (!customerId) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const digitalProductId =
-    req.params.id || req.body.digitalProductId || req.params.digitalProductId;
+  const digitalProductId = String(
+    req.params.id || authReq.body?.digitalProductId || req.params.digitalProductId || '',
+  );
 
-  if (!digitalProductId) {
+  if (!digitalProductId || digitalProductId === 'undefined') {
     return next();
   }
 
   try {
-    const digitalProductService = req.scope.resolve('digitalProductService');
-    const accessControlService = req.scope.resolve('accessControlService');
+    const digitalProductService = req.scope.resolve('digitalProductService') as { retrieveProduct: (id: string) => Promise<{ requiredTier?: string }> };
+    const accessControlService = req.scope.resolve('accessControlService') as { verifyAccess: (customerId: string, tier: string) => Promise<boolean> };
 
     const product = await digitalProductService.retrieveProduct(digitalProductId);
 

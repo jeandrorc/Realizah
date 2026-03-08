@@ -2,7 +2,7 @@ import { model } from '@medusajs/framework/utils';
 
 const DigitalFile = model.define('digital_file', {
   id: model.id().primaryKey(),
-  digitalProductId: model.text().searchable(),
+  digitalProductId: model.text(),
   name: model.text(),
   description: model.text().nullable(),
   storageKey: model.text().unique(),
@@ -12,8 +12,8 @@ const DigitalFile = model.define('digital_file', {
   metadata: model.json().nullable(),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-DigitalFile.belongsTo(() => require('./digital-product').default, {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(DigitalFile as any).belongsTo(() => require('./digital-product').default, {
   mappedBy: 'digitalProductId',
 });
 

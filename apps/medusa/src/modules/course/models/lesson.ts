@@ -2,7 +2,7 @@ import { model } from '@medusajs/framework/utils';
 
 const Lesson = model.define('lesson', {
   id: model.id().primaryKey(),
-  moduleId: model.text().searchable(),
+  moduleId: model.text(),
   title: model.text(),
   description: model.text().nullable(),
   type: model.enum(['video', 'text', 'quiz', 'assignment', 'file']),
@@ -14,8 +14,8 @@ const Lesson = model.define('lesson', {
   metadata: model.json().nullable(),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-Lesson.belongsTo(() => require('./course-module').default, {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(Lesson as any).belongsTo(() => require('./course-module').default, {
   mappedBy: 'moduleId',
 });
 

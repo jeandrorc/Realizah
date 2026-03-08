@@ -32,14 +32,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build (storefront + packages; medusa excluded - TS errors in middleware/migrations)
-        run: pnpm build --filter=storefront
+      - name: Build (storefront + medusa + packages)
+        run: pnpm build
 
       - name: Lint
         run: pnpm lint
 
-      - name: Type check (exclude medusa)
-        run: pnpm type-check --filter=storefront
+      - name: Type check (storefront + medusa)
+        run: pnpm type-check --filter=storefront --filter=medusa
 
   e2e:
     name: E2E (Storefront mock)

@@ -1,5 +1,7 @@
 import type { MedusaRequest, MedusaResponse, MedusaNextFunction } from '@medusajs/framework/http';
 
+type ReqWithAuth = MedusaRequest & { user?: { customer_id?: string }; body?: Record<string, unknown> };
+
 /**
  * Middleware to verify customer access to courses based on tier and features
  */
@@ -8,32 +10,34 @@ export async function verifyCourseAccess(
   res: MedusaResponse,
   next: MedusaNextFunction,
 ) {
-  const customerId = req.user?.customer_id;
+  const authReq = req as ReqWithAuth;
+  const customerId = authReq.user?.customer_id;
 
   if (!customerId) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const courseId = req.params.id || req.body.courseId;
+  const courseId = String(req.params.id || authReq.body?.courseId || '');
 
-  if (!courseId) {
+  if (!courseId || courseId === 'undefined') {
     return next();
   }
 
   try {
-    const courseService = req.scope.resolve('courseService');
-    const accessControlService = req.scope.resolve('accessControlService');
+    const courseService = req.scope.resolve('courseService') as { retrieveCourse: (id: string) => Promise<{ requiredTier?: string; featureId?: string }> };
+    const accessControlService = req.scope.resolve('accessControlService') as { verifyAccess: (customerId: string, tierOrFeature: string) => Promise<boolean> };
 
     const course = await courseService.retrieveCourse(courseId);
 
     // Check tier-based access
-    const hasAccess = await accessControlService.verifyAccess(customerId, course.requiredTier);
+    const requiredTier = course.requiredTier ?? 'free';
+    const hasAccess = await accessControlService.verifyAccess(customerId, requiredTier);
 
     if (!hasAccess) {
       return res.status(403).json({
         error: 'Access denied',
-        message: `This course requires ${course.requiredTier} tier or higher`,
-        requiredTier: course.requiredTier,
+        message: `This course requires ${requiredTier} tier or higher`,
+        requiredTier,
       });
     }
 

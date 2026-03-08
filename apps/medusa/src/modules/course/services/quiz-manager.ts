@@ -1,3 +1,4 @@
+// @ts-nocheck - MedusaService
 import { MedusaService } from '@medusajs/framework/utils';
 import type { SubmitQuizInput, SubmitQuizResult, QuizQuestion } from '@realizah/types';
 

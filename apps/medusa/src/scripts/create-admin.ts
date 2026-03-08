@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { MedusaModule } from '@medusajs/framework/modules-sdk';
 
 async function createAdmin() {

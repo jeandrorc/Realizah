@@ -142,7 +142,7 @@ export default async function seedFeatures({ container }: { container: MedusaCon
   for (const featureData of features) {
     try {
       // Check if feature already exists
-      const existing = await featureService.retrieveFeature(featureData.id);
+      const existing = await (featureService as { retrieveFeature: (id: string) => Promise<unknown> }).retrieveFeature(featureData.id);
       if (existing) {
         logger.info(`[Access Control] Feature ${featureData.id} already exists, skipping`);
         continue;
@@ -152,7 +152,7 @@ export default async function seedFeatures({ container }: { container: MedusaCon
     }
 
     try {
-      await featureService.createFeature(featureData);
+      await (featureService as { createFeature: (data: unknown) => Promise<unknown> }).createFeature(featureData);
       logger.info(`[Access Control] Created feature: ${featureData.id}`);
     } catch (error) {
       logger.error(

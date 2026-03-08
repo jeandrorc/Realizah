@@ -2,11 +2,11 @@ import { model } from '@medusajs/framework/utils';
 
 const Subscription = model.define('subscription', {
   id: model.id().primaryKey(),
-  customerId: model.text().searchable(),
+  customerId: model.text(),
   planId: model.text(),
   status: model.enum(['trialing', 'active', 'past_due', 'canceled', 'unpaid']),
   currentPeriodStart: model.dateTime(),
-  currentPeriodEnd: model.dateTime().searchable(),
+  currentPeriodEnd: model.dateTime(),
   cancelAt: model.dateTime().nullable(),
   canceledAt: model.dateTime().nullable(),
   trialStart: model.dateTime().nullable(),
@@ -15,8 +15,8 @@ const Subscription = model.define('subscription', {
   metadata: model.json().nullable(),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-Subscription.belongsTo(() => require('./subscription-plan').default, {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(Subscription as any).belongsTo(() => require('./subscription-plan').default, {
   mappedBy: 'planId',
 });
 

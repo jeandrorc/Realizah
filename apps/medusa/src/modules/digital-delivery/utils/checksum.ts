@@ -25,5 +25,5 @@ export function parseChecksum(checksum: string): {
   hash: string;
 } {
   const [algorithm, hash] = checksum.split(':');
-  return { algorithm, hash };
+  return { algorithm: algorithm ?? 'sha256', hash: hash ?? checksum };
 }

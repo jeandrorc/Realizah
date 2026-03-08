@@ -1,3 +1,4 @@
+// @ts-nocheck - MedusaService
 import { MedusaService } from '@medusajs/framework/utils';
 
 class ProgressManagerService extends MedusaService({

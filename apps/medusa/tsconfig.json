@@ -2,8 +2,9 @@
   "extends": "@realizah/tsconfig/medusa.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "skipLibCheck": true,
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", ".medusa", "src/_api_disabled"]
+  "exclude": ["node_modules", "dist", ".medusa"]
 }

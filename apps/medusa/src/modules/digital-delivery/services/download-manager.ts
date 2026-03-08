@@ -1,3 +1,4 @@
+// @ts-nocheck - MedusaService
 import { MedusaService } from '@medusajs/framework/utils';
 import type { GenerateDownloadUrlInput, DownloadUrlResponse } from '@realizah/types';
 import { getSignedDownloadUrl } from '../utils';

@@ -51,6 +51,9 @@ importers:
 
   apps/medusa:
     dependencies:
+      '@medusajs/admin-sdk':
+        specifier: ^2.13.3
+        version: 2.13.3
       '@medusajs/admin-shared':
         specifier: ^2.13.3
         version: 2.13.3
@@ -59,13 +62,13 @@ importers:
         version: 2.13.3(typescript@5.9.3)
       '@medusajs/draft-order':
         specifier: ^2.13.3
-        version: 2.13.3(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(react-dom@18.3.1)(react@18.3.1)
+        version: 2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(react-dom@18.3.1)(react@18.3.1)
       '@medusajs/framework':
         specifier: ^2.7.1
         version: 2.13.3(@medusajs/cli@2.13.3)(@types/node@20.19.35)(vite@5.4.21)(zod@3.25.76)
       '@medusajs/medusa':
         specifier: ^2.7.1
-        version: 2.13.3(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(@types/node@20.19.35)(awilix@8.0.1)(posthog-node@5.28.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.9.3)
+        version: 2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(@types/node@20.19.35)(awilix@8.0.1)(posthog-node@5.28.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.9.3)
       '@medusajs/types':
         specifier: ^2.7.1
         version: 2.13.3(vite@5.4.21)
@@ -103,6 +106,9 @@ importers:
       '@medusajs/medusa-cli':
         specifier: rc
         version: 2.0.0-rc-20241016093905(@mikro-orm/core@5.9.7)(@mikro-orm/knex@5.9.7)(@mikro-orm/migrations@5.9.7)(@mikro-orm/postgresql@5.9.7)(@types/node@20.19.35)(awilix@8.0.1)(pg@8.20.0)(vite@5.4.21)
+      '@mikro-orm/migrations':
+        specifier: ^5.9.7
+        version: 5.9.7(@mikro-orm/core@5.9.7)(@types/node@20.19.35)(pg@8.20.0)
       '@realizah/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -2958,6 +2964,13 @@ packages:
       - yaml
     dev: false
 
+  /@medusajs/admin-sdk@2.13.3:
+    resolution: {integrity: sha512-XE7R2OLMsoLqnTh6GHxI8wShwv/j02pKxpOPc4/D+Zy133xy2XYfg+d8keI68V6t+HIrGHcIO04nju6psBhegw==}
+    dependencies:
+      '@medusajs/admin-shared': 2.13.3
+      zod: 3.25.76
+    dev: false
+
   /@medusajs/admin-shared@2.13.3:
     resolution: {integrity: sha512-FLZMxH2pBy8o5XJTifgMTxnY6W8ke1skXr3fX02APjiySCdmegiUnok8u70KGVRQNU7rfPyvApldh9ZffvDNxw==}
     dev: false
@@ -3268,7 +3281,7 @@ packages:
       - tedious
     dev: false
 
-  /@medusajs/draft-order@2.13.3(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(react-dom@18.3.1)(react@18.3.1):
+  /@medusajs/draft-order@2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-hU6x/5nAae2dtuHt92wSXuR8yGYjyL4sBUJiCTj4L65t9Q0H28SDzB+92p1bmmOBnoaOrD0rmDvaLOOcg0zkMQ==}
     engines: {node: '>=20'}
     peerDependencies:
@@ -3302,6 +3315,7 @@ packages:
       '@ariakit/react': 0.4.22(react-dom@18.3.1)(react@18.3.1)
       '@babel/runtime': 7.28.6
       '@hookform/resolvers': 3.4.2(react-hook-form@7.49.1)
+      '@medusajs/admin-sdk': 2.13.3
       '@medusajs/cli': 2.13.3(@types/node@20.19.35)
       '@medusajs/framework': 2.13.3(@medusajs/cli@2.13.3)(@types/node@20.19.35)(vite@5.4.21)(zod@3.25.76)
       '@medusajs/js-sdk': 2.13.3
@@ -3574,7 +3588,7 @@ packages:
       - vite
     dev: true
 
-  /@medusajs/medusa@2.13.3(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(@types/node@20.19.35)(awilix@8.0.1)(posthog-node@5.28.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.9.3):
+  /@medusajs/medusa@2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(@types/node@20.19.35)(awilix@8.0.1)(posthog-node@5.28.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.9.3):
     resolution: {integrity: sha512-MOWiU1+FRKamlCZRESQ8HznBi59XQ90oWhfvXqjoXWbRLXNw+Mrf8GUDYWekpZaP/Qw0ORwv3YLIaRZ7eATwwA==}
     engines: {node: '>=20'}
     peerDependencies:
@@ -3612,7 +3626,7 @@ packages:
       '@medusajs/core-flows': 2.13.3(@medusajs/framework@2.13.3)
       '@medusajs/currency': 2.13.3(@medusajs/framework@2.13.3)
       '@medusajs/customer': 2.13.3(@medusajs/framework@2.13.3)
-      '@medusajs/draft-order': 2.13.3(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(react-dom@18.3.1)(react@18.3.1)
+      '@medusajs/draft-order': 2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(react-dom@18.3.1)(react@18.3.1)
       '@medusajs/event-bus-local': 2.13.3(@medusajs/framework@2.13.3)
       '@medusajs/event-bus-redis': 2.13.3(@medusajs/framework@2.13.3)
       '@medusajs/file': 2.13.3(@medusajs/framework@2.13.3)
