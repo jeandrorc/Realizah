@@ -32,12 +32,15 @@ jobs:
     needs: [ci]
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy Medusa to VPS2 (git clone → docker build → restart)
+      - name: Deploy Medusa to VPS2 via VPS1 jump host
         uses: appleboy/ssh-action@v1
         with:
           host: 2.24.31.23
           username: root
           key: ${{ secrets.VPS2_SSH_KEY }}
+          proxy_host: 69.62.103.34
+          proxy_username: root
+          proxy_key: ${{ secrets.VPS1_SSH_KEY }}
           envs: GH_TOKEN,DATABASE_URL,JWT_SECRET,COOKIE_SECRET,STORE_CORS,ADMIN_CORS,MP_ACCESS_TOKEN,MP_WEBHOOK_SECRET
           script: |
             # Pull latest code
