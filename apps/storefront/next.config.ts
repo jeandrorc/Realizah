@@ -1,7 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  // standalone only for Docker builds; Vercel manages its own output
+  ...(process.env.NEXT_STANDALONE === '1' ? { output: 'standalone' } : {}),
   transpilePackages: ['@realizah/types', '@realizah/utils'],
   images: {
     remotePatterns: [

@@ -30,10 +30,11 @@ COPY package.json pnpm-workspace.yaml ./
 RUN pnpm --filter @realizah/types build
 RUN pnpm --filter @realizah/utils build
 
-# Build storefront (standalone output)
+# Build storefront (standalone output for Docker)
 WORKDIR /app/apps/storefront
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV NEXT_STANDALONE=1
 
 RUN pnpm build
 
