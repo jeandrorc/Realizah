@@ -55,6 +55,7 @@ Impactos positivos e negativos da decisão.
 
 | Plan | Status | Descrição |
 |------|--------|-----------|
+| [2026-05-02-storefront-architecture-improvement.md](2026-05-02-storefront-architecture-improvement.md) | 📋 Proposta | Storefront: fonte única Medusa, adapters/Zod, hooks/API, SEO PDP, hexagonal leve |
 | [2026-03-04-monorepo-architecture-design.md](2026-03-04-monorepo-architecture-design.md) | ✅ Aprovado | Decisão arquitetural: Medusa v2 + Next.js em monorepo |
 | [2026-03-04-fase1-setup-monorepo.md](2026-03-04-fase1-setup-monorepo.md) | 🚧 Em Progresso | Plano detalhado de implementação da Fase 1 |
 | [QUICK-START-FASE1.md](QUICK-START-FASE1.md) | 📖 Guia | Guia rápido para executar a Fase 1 |

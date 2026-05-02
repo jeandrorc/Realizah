@@ -1,0 +1,95 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Lint · Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm type-check
+
+  deploy-api:
+    name: Deploy API → VPS2
+    needs: [ci]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Medusa to VPS2 (git clone → docker build → restart)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 2.24.31.23
+          username: root
+          key: ${{ secrets.VPS2_SSH_KEY }}
+          envs: GH_TOKEN,DATABASE_URL,JWT_SECRET,COOKIE_SECRET,STORE_CORS,ADMIN_CORS,MP_ACCESS_TOKEN,MP_WEBHOOK_SECRET
+          script: |
+            # Pull latest code
+            rm -rf /tmp/realizah-build
+            git clone https://jeandrorc:$GH_TOKEN@github.com/jeandrorc/realizah.git /tmp/realizah-build --depth=1
+
+            # Build image
+            cd /tmp/realizah-build
+            docker build -t realizah-api:latest -f apps/medusa/Dockerfile .
+
+            # Restart container
+            docker stop realizah-api || true
+            docker rm realizah-api || true
+            docker run -d \
+              --name realizah-api \
+              --restart unless-stopped \
+              --network supabase_default \
+              -p 127.0.0.1:9001:9000 \
+              -e NODE_ENV=production \
+              -e DATABASE_URL="$DATABASE_URL" \
+              -e JWT_SECRET="$JWT_SECRET" \
+              -e COOKIE_SECRET="$COOKIE_SECRET" \
+              -e STORE_CORS="$STORE_CORS" \
+              -e ADMIN_CORS="$ADMIN_CORS" \
+              -e AUTH_CORS="$STORE_CORS,$ADMIN_CORS" \
+              -e MERCADOPAGO_ACCESS_TOKEN="$MP_ACCESS_TOKEN" \
+              -e MERCADOPAGO_WEBHOOK_SECRET="$MP_WEBHOOK_SECRET" \
+              -e MERCADOPAGO_SANDBOX=true \
+              realizah-api:latest
+        env:
+          GH_TOKEN: ${{ secrets.GH_CLONE_TOKEN }}
+          DATABASE_URL: ${{ secrets.REALIZAH_DB_URL }}
+          JWT_SECRET: ${{ secrets.REALIZAH_JWT_SECRET }}
+          COOKIE_SECRET: ${{ secrets.REALIZAH_COOKIE_SECRET }}
+          STORE_CORS: ${{ secrets.REALIZAH_STORE_CORS }}
+          ADMIN_CORS: ${{ secrets.REALIZAH_ADMIN_CORS }}
+          MP_ACCESS_TOKEN: ${{ secrets.REALIZAH_MP_ACCESS_TOKEN }}
+          MP_WEBHOOK_SECRET: ${{ secrets.REALIZAH_MP_WEBHOOK_SECRET }}
+
+  deploy-web:
+    name: Deploy Storefront → Vercel
+    needs: [ci]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install -g pnpm vercel
+      - name: Deploy to Vercel
+        run: vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_REALIZAH }}
