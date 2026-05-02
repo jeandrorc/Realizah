@@ -4,10 +4,15 @@ import { listCourses } from '@/lib/api/courses';
 import { BASE_URL } from '@/lib/config';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [{ products }, { courses }] = await Promise.all([
+  const [productsResult, coursesResult] = await Promise.allSettled([
     listProducts({ limit: 100 }),
     listCourses({ limit: 100 }),
   ]);
+
+  const products =
+    productsResult.status === 'fulfilled' ? productsResult.value.products : [];
+  const courses =
+    coursesResult.status === 'fulfilled' ? coursesResult.value.courses : [];
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
