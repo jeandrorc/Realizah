@@ -4,6 +4,10 @@ const { defineConfig, loadEnv } = require('@medusajs/framework/utils');
 loadEnv(process.env.NODE_ENV || 'development', process.cwd());
 
 module.exports = defineConfig({
+  admin: {
+    disable: false,
+    outDir: path.join(__dirname, 'dist', 'public', 'admin'),
+  },
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
     databaseDriverOptions: { connection: { ssl: false } },
