@@ -34,6 +34,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@mikro-orm/migrations": "^6.4.16",
     "@realizah/tsconfig": "workspace:*",
     "@types/node": "^20.11.5",
     "ts-node": "^10.9.2",
