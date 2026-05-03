@@ -49,80 +49,7 @@ importers:
         specifier: ^5.3.3
         version: 5.9.3
 
-  apps/medusa:
-    dependencies:
-      '@medusajs/admin-sdk':
-        specifier: ^2.13.3
-        version: 2.13.3
-      '@medusajs/admin-shared':
-        specifier: ^2.13.3
-        version: 2.13.3
-      '@medusajs/dashboard':
-        specifier: ^2.13.3
-        version: 2.13.3(typescript@5.9.3)
-      '@medusajs/draft-order':
-        specifier: ^2.13.3
-        version: 2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(react-dom@18.3.1)(react@18.3.1)
-      '@medusajs/framework':
-        specifier: ^2.7.1
-        version: 2.13.3(@medusajs/cli@2.13.3)(@types/node@20.19.35)(vite@5.4.21)(zod@3.25.76)
-      '@medusajs/medusa':
-        specifier: ^2.7.1
-        version: 2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(@types/node@20.19.35)(awilix@8.0.1)(posthog-node@5.28.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.9.3)
-      '@medusajs/types':
-        specifier: ^2.7.1
-        version: 2.13.3(vite@5.4.21)
-      '@medusajs/utils':
-        specifier: ^2.7.1
-        version: 2.13.3(@types/node@20.19.35)(express@4.22.1)
-      '@realizah/mercadopago-provider':
-        specifier: workspace:*
-        version: link:../../packages/mercadopago-provider
-      '@realizah/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@realizah/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
-      awilix:
-        specifier: ^8.0.1
-        version: 8.0.1
-      mercadopago:
-        specifier: ^2.12.0
-        version: 2.12.0
-      pg:
-        specifier: ^8.11.3
-        version: 8.20.0
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.3.1(react@18.3.1)
-      zod:
-        specifier: 3.25.76
-        version: 3.25.76
-    devDependencies:
-      '@medusajs/cli':
-        specifier: ^2.13.3
-        version: 2.13.3(@types/node@20.19.35)
-      '@mikro-orm/migrations':
-        specifier: ^6.4.16
-        version: 6.4.16(@mikro-orm/core@6.4.16)(@types/node@20.19.35)(pg@8.20.0)
-      '@realizah/tsconfig':
-        specifier: workspace:*
-        version: link:../../packages/tsconfig
-      '@types/node':
-        specifier: ^20.11.5
-        version: 20.19.35
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.19.35)(typescript@5.9.3)
-      typescript:
-        specifier: ^5.3.3
-        version: 5.9.3
-
-  apps/storefront:
+  apps/luveeparfum:
     dependencies:
       '@hookform/resolvers':
         specifier: ^5.2.2
@@ -151,6 +78,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.2.4
         version: 1.2.4(@types/react@18.3.28)(react@18.3.1)
+      '@realizah/storefront-core':
+        specifier: workspace:*
+        version: link:../../packages/storefront-core
       '@realizah/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -237,6 +167,79 @@ importers:
         specifier: ^5.3.3
         version: 5.9.3
 
+  apps/medusa:
+    dependencies:
+      '@medusajs/admin-sdk':
+        specifier: ^2.13.3
+        version: 2.13.3
+      '@medusajs/admin-shared':
+        specifier: ^2.13.3
+        version: 2.13.3
+      '@medusajs/dashboard':
+        specifier: ^2.13.3
+        version: 2.13.3(typescript@5.9.3)
+      '@medusajs/draft-order':
+        specifier: ^2.13.3
+        version: 2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(react-dom@18.3.1)(react@18.3.1)
+      '@medusajs/framework':
+        specifier: ^2.7.1
+        version: 2.13.3(@medusajs/cli@2.13.3)(@types/node@20.19.35)(vite@5.4.21)(zod@3.25.76)
+      '@medusajs/medusa':
+        specifier: ^2.7.1
+        version: 2.13.3(@medusajs/admin-sdk@2.13.3)(@medusajs/cli@2.13.3)(@medusajs/framework@2.13.3)(@types/node@20.19.35)(awilix@8.0.1)(posthog-node@5.28.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.9.3)
+      '@medusajs/types':
+        specifier: ^2.7.1
+        version: 2.13.3(vite@5.4.21)
+      '@medusajs/utils':
+        specifier: ^2.7.1
+        version: 2.13.3(@types/node@20.19.35)(express@4.22.1)
+      '@realizah/mercadopago-provider':
+        specifier: workspace:*
+        version: link:../../packages/mercadopago-provider
+      '@realizah/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@realizah/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
+      awilix:
+        specifier: ^8.0.1
+        version: 8.0.1
+      mercadopago:
+        specifier: ^2.12.0
+        version: 2.12.0
+      pg:
+        specifier: ^8.11.3
+        version: 8.20.0
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.3.1(react@18.3.1)
+      zod:
+        specifier: 3.25.76
+        version: 3.25.76
+    devDependencies:
+      '@medusajs/cli':
+        specifier: ^2.13.3
+        version: 2.13.3(@types/node@20.19.35)
+      '@mikro-orm/migrations':
+        specifier: ^6.4.16
+        version: 6.4.16(@mikro-orm/core@6.4.16)(@types/node@20.19.35)(pg@8.20.0)
+      '@realizah/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@types/node':
+        specifier: ^20.11.5
+        version: 20.19.35
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@20.19.35)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+
   packages/mercadopago-provider:
     dependencies:
       '@medusajs/framework':
@@ -254,6 +257,28 @@ importers:
         version: link:../tsconfig
       tsup:
         specifier: ^8.0.1
+        version: 8.5.1(typescript@5.9.3)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+
+  packages/storefront-core:
+    dependencies:
+      '@medusajs/js-sdk':
+        specifier: ^2.13.3
+        version: 2.13.3
+      '@tanstack/react-query':
+        specifier: ^5.90.21
+        version: 5.90.21(react@18.3.1)
+    devDependencies:
+      '@realizah/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: ^20.11.5
+        version: 20.19.35
+      tsup:
+        specifier: ^8.0.0
         version: 8.5.1(typescript@5.9.3)
       typescript:
         specifier: ^5.3.3
