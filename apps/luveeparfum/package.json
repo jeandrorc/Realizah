@@ -1,5 +1,5 @@
 {
-  "name": "storefront",
+  "name": "luveeparfum",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -23,6 +23,7 @@
     "@radix-ui/react-progress": "^1.1.8",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
+    "@realizah/storefront-core": "workspace:*",
     "@realizah/types": "workspace:*",
     "@realizah/utils": "workspace:*",
     "@tanstack/react-query": "^5.90.21",

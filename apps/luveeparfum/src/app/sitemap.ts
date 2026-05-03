@@ -9,10 +9,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     listCourses({ limit: 100 }),
   ]);
 
-  const products =
-    productsResult.status === 'fulfilled' ? productsResult.value.products : [];
-  const courses =
-    coursesResult.status === 'fulfilled' ? coursesResult.value.courses : [];
+  const products = productsResult.status === 'fulfilled' ? productsResult.value.products : [];
+  const courses = coursesResult.status === 'fulfilled' ? coursesResult.value.courses : [];
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },

@@ -5,17 +5,17 @@ module.exports = {
       2,
       'always',
       [
-        'feat',     // Nova funcionalidade
-        'fix',      // Correção de bug
-        'docs',     // Apenas documentação
-        'style',    // Formatação, sem mudança de lógica
+        'feat', // Nova funcionalidade
+        'fix', // Correção de bug
+        'docs', // Apenas documentação
+        'style', // Formatação, sem mudança de lógica
         'refactor', // Refatoração sem mudança de comportamento
-        'perf',     // Melhoria de performance
-        'test',     // Adição ou correção de testes
-        'chore',    // Manutenção (deps, config)
-        'ci',       // CI/CD
-        'build',    // Build system
-        'revert',   // Reverter commit anterior
+        'perf', // Melhoria de performance
+        'test', // Adição ou correção de testes
+        'chore', // Manutenção (deps, config)
+        'ci', // CI/CD
+        'build', // Build system
+        'revert', // Reverter commit anterior
       ],
     ],
     'scope-enum': [
@@ -23,19 +23,21 @@ module.exports = {
       'always',
       [
         // Apps
+        'luveeparfum',
         'storefront',
         'medusa',
-        
+
         // Módulos
         'subscription',
         'access-control',
         'course',
         'digital-delivery',
-        
+
         // Packages
+        'storefront-core',
         'types',
         'utils',
-        
+
         // Outros
         'deps',
         'config',

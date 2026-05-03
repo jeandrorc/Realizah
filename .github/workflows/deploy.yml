@@ -80,8 +80,8 @@ jobs:
           MP_ACCESS_TOKEN: ${{ secrets.REALIZAH_MP_ACCESS_TOKEN }}
           MP_WEBHOOK_SECRET: ${{ secrets.REALIZAH_MP_WEBHOOK_SECRET }}
 
-  deploy-web:
-    name: Deploy Storefront → Vercel
+  deploy-luveeparfum:
+    name: Deploy luveeparfum → Vercel
     needs: [ci]
     runs-on: ubuntu-latest
     steps:
@@ -95,4 +95,4 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_REALIZAH }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_LUVEEPARFUM }}

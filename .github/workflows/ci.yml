@@ -30,17 +30,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build (storefront + medusa + packages)
+      - name: Build (all apps + packages)
         run: pnpm build
 
       - name: Lint
         run: pnpm lint
 
-      - name: Type check (storefront + medusa)
-        run: pnpm type-check --filter=storefront --filter=medusa
+      - name: Type check
+        run: pnpm type-check --filter=luveeparfum --filter=medusa
 
   e2e:
-    name: E2E (Storefront mock)
+    name: E2E (luveeparfum mock)
     runs-on: ubuntu-latest
     needs: build-and-lint
     steps:
@@ -60,12 +60,12 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: pnpm --filter storefront exec playwright install --with-deps chromium
+        run: pnpm --filter luveeparfum exec playwright install --with-deps chromium
 
-      - name: Build storefront
-        run: pnpm --filter storefront build
+      - name: Build luveeparfum
+        run: pnpm --filter luveeparfum build
 
       - name: Run E2E tests (mock mode)
-        run: pnpm --filter storefront e2e
+        run: pnpm --filter luveeparfum e2e
         env:
           CI: true
