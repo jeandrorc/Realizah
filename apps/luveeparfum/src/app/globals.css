@@ -4,63 +4,47 @@
 
 @layer base {
   :root {
-    /* Brand tokens */
+    /* Luvée Parfum Brand Tokens */
+    --color-cream: #f7f1e8;
+    --color-offwhite: #fffdf8;
+    --color-cacau: #4e3a2d;
+    --color-oliva: #8a8f68;
+    --color-salvia: #a8ae8e;
+    --color-dourado: #c8a96a;
+    --color-nude: #d8b7a6;
+    --color-terracota: #b86f4b;
+    --color-maracuja: #e7c85f;
+
+    /* Legacy tokens (kept for component compat) */
     --color-ink: #0a0a0a;
     --color-paper: #fafafa;
     --color-surface: #f2f2f2;
     --color-fire: #e5001c;
     --color-sun: #ffd000;
-    --color-zinc-200: #e4e4e7;
-    --color-zinc-500: #71717a;
-    --color-zinc-800: #27272a;
-    --color-success: #16a34a;
-    --color-warning: #f59e0b;
 
-    /* shadcn/ui tokens mapeados para Bold Commerce */
-    --background: 0 0% 98%;
-    --foreground: 0 0% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
-    --primary: 0 0% 4%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 95%;
-    --secondary-foreground: 0 0% 4%;
-    --muted: 0 0% 95%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 51 100% 50%;
-    --accent-foreground: 0 0% 4%;
+    /* shadcn/ui tokens — mapeados para Luvée Parfum */
+    --background: 38 53% 93%; /* cream */
+    --foreground: 24 28% 24%; /* cacau */
+    --card: 46 100% 99%; /* offwhite */
+    --card-foreground: 24 28% 24%; /* cacau */
+    --popover: 46 100% 99%;
+    --popover-foreground: 24 28% 24%;
+    --primary: 24 28% 24%; /* cacau */
+    --primary-foreground: 38 53% 93%; /* cream */
+    --secondary: 21 35% 80%; /* nude */
+    --secondary-foreground: 24 28% 24%;
+    --muted: 38 30% 88%;
+    --muted-foreground: 24 15% 45%;
+    --accent: 38 45% 60%; /* dourado */
+    --accent-foreground: 24 28% 24%;
     --destructive: 353 100% 45%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 0 0% 4%;
+    --border: 38 30% 82%;
+    --input: 38 30% 82%;
+    --ring: 38 45% 60%; /* dourado */
     --radius: 0.5rem;
 
     /* Note: --font-display and --font-body are injected by Next.js font system */
-  }
-
-  .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 64%;
-    --accent: 51 100% 50%;
-    --accent-foreground: 0 0% 4%;
-    --destructive: 353 100% 45%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 98%;
   }
 }
 
@@ -69,14 +53,14 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-cream text-cacau;
     font-family: var(--font-body);
   }
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
   }
   button {
     background-clip: unset;
@@ -84,11 +68,88 @@
   }
 }
 
-/* Utilitários Bold Commerce */
+/* Luvée Parfum Utilities */
 @layer utilities {
   .font-display {
     font-family: var(--font-display);
   }
+  .font-serif {
+    font-family: var(--font-display);
+  }
+
+  /* Brand color backgrounds */
+  .bg-cream {
+    background-color: var(--color-cream);
+  }
+  .bg-offwhite {
+    background-color: var(--color-offwhite);
+  }
+  .bg-cacau {
+    background-color: var(--color-cacau);
+  }
+  .bg-oliva {
+    background-color: var(--color-oliva);
+  }
+  .bg-salvia {
+    background-color: var(--color-salvia);
+  }
+  .bg-dourado {
+    background-color: var(--color-dourado);
+  }
+  .bg-nude {
+    background-color: var(--color-nude);
+  }
+  .bg-terracota {
+    background-color: var(--color-terracota);
+  }
+  .bg-maracuja {
+    background-color: var(--color-maracuja);
+  }
+
+  /* Brand color text */
+  .text-cream {
+    color: var(--color-cream);
+  }
+  .text-offwhite {
+    color: var(--color-offwhite);
+  }
+  .text-cacau {
+    color: var(--color-cacau);
+  }
+  .text-oliva {
+    color: var(--color-oliva);
+  }
+  .text-salvia {
+    color: var(--color-salvia);
+  }
+  .text-dourado {
+    color: var(--color-dourado);
+  }
+  .text-nude {
+    color: var(--color-nude);
+  }
+  .text-terracota {
+    color: var(--color-terracota);
+  }
+  .text-maracuja {
+    color: var(--color-maracuja);
+  }
+
+  /* Brand border */
+  .border-cacau {
+    border-color: var(--color-cacau);
+  }
+  .border-dourado {
+    border-color: var(--color-dourado);
+  }
+  .border-nude {
+    border-color: var(--color-nude);
+  }
+  .border-terracota {
+    border-color: var(--color-terracota);
+  }
+
+  /* Legacy (kept for compat) */
   .bg-fire {
     background-color: var(--color-fire);
   }
@@ -104,13 +165,28 @@
   .border-fire {
     border-color: var(--color-fire);
   }
+
+  /* Shadows */
   .shadow-card {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(78, 58, 45, 0.08);
   }
   .shadow-card-hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 16px rgba(78, 58, 45, 0.14);
   }
   .shadow-modal {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 8px 32px rgba(78, 58, 45, 0.18);
+  }
+
+  /* Luvee scroll fade-in animation */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

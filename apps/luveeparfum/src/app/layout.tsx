@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { Bebas_Neue, Inter } from 'next/font/google';
+import { Cormorant_Garamond, Inter } from 'next/font/google';
 import { Providers } from '@/components/providers';
 import { BASE_URL } from '@/lib/config';
 import './globals.css';
 
-const bebasNeue = Bebas_Neue({
-  weight: '400',
+const cormorantGaramond = Cormorant_Garamond({
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
   variable: '--font-display',
 });
@@ -18,25 +19,25 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Realizah',
-    default: 'Realizah — E-commerce, Cursos e Produtos Digitais',
+    template: '%s | Luvée Parfum',
+    default: 'Luvée Parfum — Art de Parfum Artesanal',
   },
   description:
-    'Plataforma de e-commerce, cursos e produtos digitais para acelerar seu crescimento.',
+    'Sabonetes artesanais, velas perfumadas, perfumes e aromas para casa. Ritual de bem-estar com ingredientes naturais.',
   metadataBase: new URL(BASE_URL),
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
     url: BASE_URL,
-    siteName: 'Realizah',
-    title: 'Realizah — E-commerce, Cursos e Produtos Digitais',
+    siteName: 'Luvée Parfum',
+    title: 'Luvée Parfum — Art de Parfum Artesanal',
     description:
-      'Plataforma de e-commerce, cursos e produtos digitais para acelerar seu crescimento.',
+      'Sabonetes artesanais, velas perfumadas, perfumes e aromas para casa. Ritual de bem-estar com ingredientes naturais.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Realizah',
-    description: 'Plataforma de e-commerce, cursos e produtos digitais.',
+    title: 'Luvée Parfum',
+    description: 'Art de parfum artesanal — rituais de bem-estar com ingredientes naturais.',
   },
 };
 
@@ -45,7 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="pt-BR"
       suppressHydrationWarning
-      className={`${bebasNeue.variable} ${inter.variable}`}
+      className={`${cormorantGaramond.variable} ${inter.variable}`}
     >
       <body className={inter.className}>
         <Providers>{children}</Providers>

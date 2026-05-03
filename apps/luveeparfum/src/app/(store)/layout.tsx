@@ -10,7 +10,7 @@ export default function StoreLayout({ children }: { children: ReactNode }) {
       <Suspense fallback={<Header />}>
         <MegaMenuMounter />
       </Suspense>
-      <main className="pt-[108px] min-h-screen">{children}</main>
+      <main className="pt-[96px] min-h-screen">{children}</main>
       <Footer />
     </>
   );

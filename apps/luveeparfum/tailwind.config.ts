@@ -16,6 +16,16 @@ const config: Config = {
         surface: '#F2F2F2',
         fire: '#E5001C',
         sun: '#FFD000',
+        // Luvée Parfum palette
+        cream: '#F7F1E8',
+        offwhite: '#FFFDF8',
+        cacau: '#4E3A2D',
+        oliva: '#8A8F68',
+        salvia: '#A8AE8E',
+        dourado: '#C8A96A',
+        nude: '#D8B7A6',
+        terracota: '#B86F4B',
+        maracuja: '#E7C85F',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -51,9 +61,10 @@ const config: Config = {
         ring: 'hsl(var(--ring))',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'sans-serif'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
         body: ['var(--font-body)', 'sans-serif'],
         sans: ['var(--font-body)', 'sans-serif'],
+        serif: ['var(--font-display)', 'Georgia', 'serif'],
       },
       fontSize: {
         hero: ['72px', { lineHeight: '1.0', letterSpacing: '0.02em' }],
