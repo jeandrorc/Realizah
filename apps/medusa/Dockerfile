@@ -54,6 +54,7 @@ COPY --from=builder /app/packages/mercadopago-provider/dist ./packages/mercadopa
 # Copy medusa build artifacts
 COPY --from=builder /app/apps/medusa/dist ./apps/medusa/dist
 COPY --from=builder /app/apps/medusa/.medusa ./apps/medusa/.medusa
+COPY --from=builder /app/apps/medusa/public ./apps/medusa/public
 COPY --from=builder /app/apps/medusa/node_modules ./apps/medusa/node_modules
 COPY --from=builder /app/apps/medusa/medusa-config.js ./apps/medusa/medusa-config.js
 
