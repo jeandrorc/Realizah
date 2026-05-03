@@ -14,28 +14,28 @@ export function ProductCard({
 }: ProductCardProps) {
   return (
     <Link href={`/products/${handle}`} className="group block">
-      <div className="relative overflow-hidden rounded-md bg-surface shadow-card hover:shadow-card-hover transition-all duration-200">
+      <div className="relative overflow-hidden rounded-2xl bg-offwhite shadow-card hover:shadow-card-hover transition-all duration-300">
         {/* Image */}
-        <div className="relative aspect-square overflow-hidden bg-zinc-100">
+        <div className="relative aspect-square overflow-hidden bg-nude/30">
           {imageUrl ? (
             <Image
               src={imageUrl}
               alt={title}
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
-            <div className="w-full h-full bg-zinc-200 flex items-center justify-center">
-              <span className="text-zinc-400 text-xs">Sem imagem</span>
+            <div className="w-full h-full bg-nude/20 flex items-center justify-center">
+              <span className="text-cacau/30 text-xs font-display italic">Luvée</span>
             </div>
           )}
 
           {/* Badge */}
           {badge && (
             <span
-              className={`absolute top-2 left-2 text-white text-xs font-bold px-2 py-0.5 rounded-sm ${
-                badge === 'OFERTA' ? 'bg-fire' : 'bg-zinc-800'
+              className={`absolute top-2.5 left-2.5 text-cream text-[10px] font-bold px-2.5 py-1 rounded-full ${
+                badge === 'OFERTA' ? 'bg-terracota' : 'bg-cacau'
               }`}
             >
               {badge === 'OFERTA' && discountPercent ? `-${discountPercent}%` : badge}
@@ -43,26 +43,30 @@ export function ProductCard({
           )}
 
           {/* Hover CTA — desktop */}
-          <div className="absolute bottom-0 left-0 right-0 bg-ink text-paper text-center text-xs font-semibold py-2 translate-y-full group-hover:translate-y-0 transition-transform duration-200 hidden md:block">
+          <div className="absolute bottom-0 left-0 right-0 bg-cacau/90 backdrop-blur-sm text-cream text-center text-xs font-medium py-2.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 hidden md:block tracking-wide">
             Adicionar ao Carrinho
           </div>
         </div>
 
         {/* Info */}
-        <div className="p-3">
-          {brand && <p className="text-xs text-zinc-500 mb-1">{brand}</p>}
-          <h3 className="text-sm font-medium text-ink line-clamp-2 mb-2">{title}</h3>
+        <div className="p-4">
+          {brand && (
+            <p className="font-display italic text-dourado text-xs mb-1 tracking-wide">{brand}</p>
+          )}
+          <h3 className="font-display text-lg text-cacau line-clamp-2 mb-2 leading-snug">
+            {title}
+          </h3>
           <div className="flex items-baseline gap-2">
-            <span className="text-base font-bold text-ink">{price}</span>
+            <span className="text-base font-semibold text-cacau">{price}</span>
             {originalPrice && (
-              <span className="text-xs text-zinc-400 line-through">{originalPrice}</span>
+              <span className="text-xs text-cacau/40 line-through">{originalPrice}</span>
             )}
           </div>
         </div>
 
         {/* CTA — mobile */}
-        <div className="md:hidden px-3 pb-3">
-          <button className="w-full bg-ink text-paper text-xs font-semibold py-2 rounded-sm">
+        <div className="md:hidden px-4 pb-4">
+          <button className="w-full bg-cacau text-cream text-xs font-medium py-2.5 rounded-full">
             + Adicionar
           </button>
         </div>
