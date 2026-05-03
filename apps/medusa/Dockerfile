@@ -53,6 +53,8 @@ COPY --from=builder /app/packages/mercadopago-provider/dist ./packages/mercadopa
 
 # Copy medusa build artifacts
 COPY --from=builder /app/apps/medusa/dist ./apps/medusa/dist
+# admin-bundler.serve() hardcodes rootDir/public/admin — copy there regardless of admin.outDir config
+COPY --from=builder /app/apps/medusa/dist/public/admin ./apps/medusa/public/admin
 COPY --from=builder /app/apps/medusa/.medusa ./apps/medusa/.medusa
 COPY --from=builder /app/apps/medusa/node_modules ./apps/medusa/node_modules
 COPY --from=builder /app/apps/medusa/medusa-config.js ./apps/medusa/medusa-config.js
