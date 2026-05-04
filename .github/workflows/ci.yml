@@ -63,7 +63,7 @@ jobs:
         run: pnpm --filter luveeparfum exec playwright install --with-deps chromium
 
       - name: Build packages
-        run: pnpm --filter @realizah/types build && pnpm --filter @realizah/utils build
+        run: pnpm --filter @realizah/types build && pnpm --filter @realizah/utils build && pnpm --filter @realizah/storefront-core build
 
       - name: Build luveeparfum
         run: pnpm --filter luveeparfum build
