@@ -14,8 +14,8 @@ test.describe('Product Detail', () => {
   });
 
   test('product detail has add to cart or buy button', async ({ page }) => {
-    // Usa handle de mock (tenis-running-pro-x)
-    await page.goto('/products/tenis-running-pro-x');
+    // Usa handle de mock (la-vie-en-rose-edp)
+    await page.goto('/products/la-vie-en-rose-edp');
     const addButton = page.getByRole('button', {
       name: /adicionar ao carrinho|comprar agora/i,
     });

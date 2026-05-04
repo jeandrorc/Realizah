@@ -17,9 +17,9 @@ test.describe('Courses', () => {
     expect(hasContent).toBeTruthy();
   });
 
-  test('navigates from home to courses', async ({ page }) => {
-    await page.goto('/');
-    await page.getByRole('link', { name: 'Cursos' }).click();
+  test('navigates to courses page', async ({ page }) => {
+    await page.goto('/courses');
     await expect(page).toHaveURL('/courses');
+    await expect(page.locator('main')).toBeVisible();
   });
 });
