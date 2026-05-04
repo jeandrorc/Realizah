@@ -23,8 +23,8 @@ test.describe('Authentication', () => {
   test('register page renders correctly', async ({ page }) => {
     await page.goto('/register');
     await expect(page.getByRole('heading', { name: /criar/i })).toBeVisible();
-    await expect(page.getByLabel('Nome')).toBeVisible();
-    await expect(page.getByLabel('Sobrenome')).toBeVisible();
+    await expect(page.getByLabel('Nome', { exact: true })).toBeVisible();
+    await expect(page.getByLabel('Sobrenome', { exact: true })).toBeVisible();
     await expect(page.getByLabel('Email')).toBeVisible();
     await expect(page.getByLabel('Senha')).toBeVisible();
   });

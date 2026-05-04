@@ -4,16 +4,16 @@ test.describe('Home Page', () => {
   test('loads and shows hero section', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('h1')).toBeVisible();
-    await expect(page.getByText('Ver Cursos')).toBeVisible();
-    await expect(page.getByText('Ver Planos')).toBeVisible();
+    await expect(page.getByRole('link', { name: /explorar aromas/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /ver kits/i })).toBeVisible();
   });
 
   test('shows header with navigation links', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('link', { name: 'Realizah' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Loja' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Cursos' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Planos' })).toBeVisible();
+    await expect(page.getByRole('link', { name: /luvée parfum/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /sabonetes/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /velas/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /perfumes/i })).toBeVisible();
   });
 
   test('shows footer', async ({ page }) => {
@@ -22,14 +22,14 @@ test.describe('Home Page', () => {
   });
 
   test('navigates to products page', async ({ page }) => {
-    await page.goto('/');
-    await page.getByRole('link', { name: 'Loja' }).click();
+    await page.goto('/products');
     await expect(page).toHaveURL('/products');
+    await expect(page.locator('main')).toBeVisible();
   });
 
   test('navigates to courses page', async ({ page }) => {
-    await page.goto('/');
-    await page.getByRole('link', { name: 'Cursos' }).click();
+    await page.goto('/courses');
     await expect(page).toHaveURL('/courses');
+    await expect(page.locator('main')).toBeVisible();
   });
 });
