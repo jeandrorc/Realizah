@@ -1,4 +1,4 @@
-export type ProductBadge = 'NOVO' | 'OFERTA' | null;
+export type ProductBadge = string | null;
 
 export interface ProductCardProps {
   id: string;
