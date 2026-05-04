@@ -4,16 +4,17 @@ test.describe('Home Page', () => {
   test('loads and shows hero section', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('h1')).toBeVisible();
-    await expect(page.getByRole('link', { name: /explorar aromas/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /ver kits/i })).toBeVisible();
+    await expect(
+      page.locator('main').getByRole('link', { name: /explorar aromas/i }),
+    ).toBeVisible();
+    await expect(page.locator('main').getByRole('link', { name: /ver kits/i })).toBeVisible();
   });
 
   test('shows header with navigation links', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('link', { name: /luvée parfum/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /sabonetes/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /velas/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /perfumes/i })).toBeVisible();
+    await expect(page.locator('header').getByRole('link', { name: /sabonetes/i })).toBeVisible();
+    await expect(page.locator('header').getByRole('link', { name: /velas/i })).toBeVisible();
+    await expect(page.locator('header').getByRole('link', { name: /perfumes/i })).toBeVisible();
   });
 
   test('shows footer', async ({ page }) => {

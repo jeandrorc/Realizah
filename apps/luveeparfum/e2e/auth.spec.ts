@@ -32,7 +32,7 @@ test.describe('Authentication', () => {
   test('register form shows validation errors', async ({ page }) => {
     await page.goto('/register');
     await page.getByRole('button', { name: /criar conta/i }).click();
-    await expect(page.getByText('Nome é obrigatório')).toBeVisible();
+    await expect(page.getByText('Nome é obrigatório').first()).toBeVisible();
   });
 
   test('protected route redirects to login', async ({ page }) => {
