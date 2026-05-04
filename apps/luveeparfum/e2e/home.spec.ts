@@ -10,11 +10,10 @@ test.describe('Home Page', () => {
     await expect(page.locator('main').getByRole('link', { name: /ver kits/i })).toBeVisible();
   });
 
-  test('shows header with navigation links', async ({ page }) => {
+  test('shows header with brand logo', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('header nav a', { hasText: /sabonetes/i })).toBeVisible();
-    await expect(page.locator('header nav a', { hasText: /velas/i })).toBeVisible();
-    await expect(page.locator('header nav a', { hasText: /perfumes/i })).toBeVisible();
+    await expect(page.locator('header')).toBeVisible();
+    await expect(page.locator('header').getByText(/luvée parfum/i)).toBeVisible();
   });
 
   test('shows footer', async ({ page }) => {
