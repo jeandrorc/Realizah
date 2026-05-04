@@ -1,7 +1,6 @@
 {
   "framework": "nextjs",
-  "rootDirectory": "apps/luveeparfum",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
-  "buildCommand": "cd ../.. && pnpm --filter @realizah/types build && pnpm --filter @realizah/utils build && pnpm --filter luveeparfum build",
+  "buildCommand": "cd ../.. && pnpm --filter @realizah/types build && pnpm --filter @realizah/utils build && pnpm --filter @realizah/storefront-core build && pnpm --filter luveeparfum build",
   "outputDirectory": ".next"
 }
