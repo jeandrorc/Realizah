@@ -12,9 +12,9 @@ test.describe('Home Page', () => {
 
   test('shows header with navigation links', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('header').getByRole('link', { name: /sabonetes/i })).toBeVisible();
-    await expect(page.locator('header').getByRole('link', { name: /velas/i })).toBeVisible();
-    await expect(page.locator('header').getByRole('link', { name: /perfumes/i })).toBeVisible();
+    await expect(page.locator('header nav a', { hasText: /sabonetes/i })).toBeVisible();
+    await expect(page.locator('header nav a', { hasText: /velas/i })).toBeVisible();
+    await expect(page.locator('header nav a', { hasText: /perfumes/i })).toBeVisible();
   });
 
   test('shows footer', async ({ page }) => {
