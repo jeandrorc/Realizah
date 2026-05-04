@@ -17,14 +17,14 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  webServer: process.env.CI
-    ? undefined
-    : {
-        command: process.env.E2E_WITH_MEDUSA
-          ? 'cd ../.. && pnpm dev'
-          : 'pnpm --filter storefront dev',
-        url: 'http://localhost:3000',
-        reuseExistingServer: !process.env.E2E_WITH_MEDUSA,
-        timeout: 180 * 1000,
-      },
+  webServer: {
+    command: process.env.CI
+      ? 'pnpm start'
+      : process.env.E2E_WITH_MEDUSA
+        ? 'cd ../.. && pnpm dev'
+        : 'pnpm --filter luveeparfum dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI && !process.env.E2E_WITH_MEDUSA,
+    timeout: 180 * 1000,
+  },
 });
