@@ -1,0 +1,58 @@
+version: "3.9"
+
+# Manual / emergency production compose.
+# Normally the API is deployed via GitHub Actions (deploy.yml).
+# Use this only for local production testing or manual VPS recovery.
+
+networks:
+  realizah:
+    driver: bridge
+
+services:
+  realizah-postgres:
+    image: postgres:16-alpine
+    container_name: realizah-postgres
+    restart: unless-stopped
+    networks:
+      - realizah
+    environment:
+      POSTGRES_DB: realizah_prod
+      POSTGRES_USER: realizah
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - realizah-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U realizah -d realizah_prod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  realizah-api:
+    image: realizah-api:latest
+    container_name: realizah-api
+    build:
+      context: .
+      dockerfile: apps/medusa/Dockerfile
+    restart: unless-stopped
+    networks:
+      - realizah
+    ports:
+      - "127.0.0.1:9001:9000"
+    depends_on:
+      realizah-postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      STORE_CORS: ${STORE_CORS}
+      ADMIN_CORS: ${ADMIN_CORS}
+      AUTH_CORS: ${STORE_CORS},${ADMIN_CORS}
+      MERCADOPAGO_ACCESS_TOKEN: ${MERCADOPAGO_ACCESS_TOKEN}
+      MERCADOPAGO_WEBHOOK_SECRET: ${MERCADOPAGO_WEBHOOK_SECRET}
+      MERCADOPAGO_SANDBOX: ${MERCADOPAGO_SANDBOX:-true}
+      MEDUSA_DISABLE_TELEMETRY: "1"
+
+volumes:
+  realizah-pg-data:

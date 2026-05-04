@@ -37,7 +37,7 @@ jobs:
         run: pnpm lint
 
       - name: Type check
-        run: pnpm type-check --filter=luveeparfum --filter=medusa
+        run: pnpm --filter luveeparfum type-check && pnpm --filter medusa type-check
 
   e2e:
     name: E2E (luveeparfum mock)
@@ -61,6 +61,9 @@ jobs:
 
       - name: Install Playwright browsers
         run: pnpm --filter luveeparfum exec playwright install --with-deps chromium
+
+      - name: Build packages
+        run: pnpm --filter @realizah/types build && pnpm --filter @realizah/utils build
 
       - name: Build luveeparfum
         run: pnpm --filter luveeparfum build
